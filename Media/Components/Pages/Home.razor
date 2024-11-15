@@ -20,14 +20,26 @@ Welcome to your new app.
         base.OnInitialized();
         try
         {
-            var product = ProductFactory.CreateProduct("PName", "Pdesc", 100, 5);
+            var product = ProductFactory.CreateProduct("in2dia", "Pdesc", 100, 5);
 
             PurchaseProductCmd command = new(product);
             IdCommandResult result = CommandBus.Send(command).Result;
 
+            product = ProductFactory.CreateProduct("india", "Pdesc", 100, 5);
+
+            command = new(product);
+            result = CommandBus.Send(command).Result;
+
             GetProductsQuery query = new();
             IEnumerable<IProduct> products = await QueryService.Query(query);
             products.ToList().ForEach(p => Console.WriteLine(p.Name));
+            if (products is not null && products.Any())
+            {
+                foreach (var p in products)
+                {
+                    var evaresult = Evaluation.Evaluator<IProduct>.Evaluate(p);
+                }
+            }
         }
         catch (Exception e)
         {
