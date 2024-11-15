@@ -1,7 +1,37 @@
 ﻿@page "/"
+@using CQRS.Mediatr.Lite
+@using Events.Commands
+@using Events.Queries
+@using ModelInterface.Factories
+@using ModelInterface.Interface
+
+@inject ICommandBus CommandBus
+@inject IQueryService QueryService
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        try
+        {
+            var product = ProductFactory.CreateProduct("PName", "Pdesc", 100, 5);
+
+            PurchaseProductCmd command = new(product);
+            IdCommandResult result = CommandBus.Send(command).Result;
+
+            GetProductsQuery query = new();
+            IEnumerable<IProduct> products = await QueryService.Query(query);
+            products.ToList().ForEach(p => Console.WriteLine(p.Name));
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
+    }
+}

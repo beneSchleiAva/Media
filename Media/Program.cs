@@ -1,4 +1,6 @@
 using Media.Components;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Media
 {
@@ -7,6 +9,8 @@ namespace Media
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(ConfigureContainer);
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
@@ -31,6 +35,11 @@ namespace Media
                 .AddInteractiveServerRenderMode();
 
             app.Run();
+        }
+        private static void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your Autofac modules or services here
+            builder.RegisterModule<DependencyModule>();
         }
     }
 }
