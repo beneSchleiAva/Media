@@ -22,8 +22,10 @@ Welcome to your new app.
         {
             var product = ProductFactory.CreateProduct("PName", "Pdesc", 100, 5);
 
-            PurchaseProductCmd command = new(product);
-            IdCommandResult result = CommandBus.Send(command).Result;
+            IssuedCmd<IProduct> cmd = new(product);
+            // PurchaseProductCmd command = new(product);
+            IdCommandResult result = CommandBus.Send(cmd).Result;
+            // IdCommandResult result = CommandBus.Send(command).Result;
 
             GetProductsQuery query = new();
             IEnumerable<IProduct> products = await QueryService.Query(query);
