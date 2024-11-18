@@ -1,14 +1,13 @@
 ﻿using CQRS.Mediatr.Lite;
-using Events.Events;
 using Events.EventsStore;
 
-namespace Events.Eventshandler
+namespace Events.Events.CreateEntity
 {
-    public class IssuedEventHandler<T, U> : CQRS.Mediatr.Lite.EventHandler<T> where T : IssuedEvent<U> where U : class
+    public class CreateEventHandler<T, U> : CQRS.Mediatr.Lite.EventHandler<T> where T : CreateEvent<U> where U : class
     {
         private readonly IEventsStore _eventStore;
 
-        public IssuedEventHandler(IEventsStore eventStore)
+        public CreateEventHandler(IEventsStore eventStore)
         {
             _eventStore = eventStore ?? throw new ArgumentNullException(nameof(eventStore));
         }

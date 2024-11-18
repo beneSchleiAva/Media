@@ -1,8 +1,7 @@
 ﻿using CQRS.Mediatr.Lite;
-using Events.Queries;
 using ModelInterface.Interface;
 
-namespace Events.QueryHandlers
+namespace Events.Queries
 {
     public class GetAllQueryHandler<T> : QueryHandler<GetAllQuery<T>, IEnumerable<T>> where T : class
     {
@@ -10,7 +9,7 @@ namespace Events.QueryHandlers
 
         public GetAllQueryHandler(IRepository<T> repository)
         {
-            this.repository = repository?? throw new ArgumentNullException();
+            this.repository = repository ?? throw new ArgumentNullException();
         }
 
         protected override Task<IEnumerable<T>> ProcessRequest(GetAllQuery<T> request)

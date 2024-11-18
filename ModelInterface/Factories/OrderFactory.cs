@@ -1,13 +1,14 @@
-﻿using ModelInterface.Interface;
+﻿using ModelInterface.Interface.Aggregates;
+using ModelInterface.Interface.Elements;
 using ModelInterface.Model;
 
 namespace ModelInterface.Factories
 {
     public class OrderFactory
     {
-        public static IOrder CreateOrder(IEnumerable<IProduct> products)
+        public static IOrder Create(List<IOrderPosition> positions)
         {
-            return new Order(products);
+            return new ConcreteOrder(positions);
         }
     }
 }

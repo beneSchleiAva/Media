@@ -1,14 +1,13 @@
 ﻿using Autofac;
 using CQRS.Mediatr.Lite;
-using Events.Commands;
-using Events.Events;
-using Events.Eventshandler;
+using Events.Commands.CreateEntity;
+using Events.Events.CreateEntity;
 using Events.EventsStore;
 using Events.EventStore;
 using Events.Queries;
-using Events.QueryHandlers;
 using Events.Repositories;
 using ModelInterface.Interface;
+using ModelInterface.Interface.Elements;
 namespace Media
 {
     public class DependencyModule : Module
@@ -43,48 +42,40 @@ namespace Media
             builder.RegisterType<CommandBus>()
     .As<ICommandBus>();
 
-            // Infrastructure
-            builder.RegisterType<ProductInMemoryRepo>()
-                .As<IProductRepository>()
-                .SingleInstance();
-
+            // Repositories
             builder.RegisterType<InMemoryRepo<IProduct>>()
                 .As<IRepository<IProduct>>()
                 .SingleInstance();
 
-            // Queries
-            builder.RegisterType<GetProductsQueryHandler>()
-                .As<QueryHandler<GetProductsQuery, IEnumerable<IProduct>>>()
+            builder.RegisterType<InMemoryRepo<IOrder>>()
+                .As<IRepository<IOrder>>()
                 .SingleInstance();
 
-
+            // QueryHandlers
             builder.RegisterType<GetAllQueryHandler<IProduct>>()
                 .As<QueryHandler<GetAllQuery<IProduct>, IEnumerable<IProduct>>>()
                 .SingleInstance();
 
-
-            // Events
-            builder.RegisterType<ProductPurchasedEventHandler>()
-                .As<CQRS.Mediatr.Lite.EventHandler<ProductPurchasedEvent>>()
+            builder.RegisterType<GetAllQueryHandler<IOrder>>()
+                .As<QueryHandler<GetAllQuery<IOrder>, IEnumerable<IOrder>>>()
                 .SingleInstance();
 
-            builder.RegisterType<IssuedEventHandler<IssuedEvent<IProduct>, IProduct>>()
-    .As<CQRS.Mediatr.Lite.EventHandler<IssuedEvent<IProduct>>>()
+            // CreateEventHandlers
+
+            builder.RegisterType<CreateEventHandler<CreateEvent<IProduct>, IProduct>>()
+    .As<CQRS.Mediatr.Lite.EventHandler<CreateEvent<IProduct>>>()
     .SingleInstance();
 
+            builder.RegisterType<CreateEventHandler<CreateEvent<IOrder>, IOrder>>()
+.As<CQRS.Mediatr.Lite.EventHandler<CreateEvent<IOrder>>>()
+.SingleInstance();
 
-            // Commands
-            builder.RegisterType<PurchaseProductCmdHandler>()
-                .As<CommandHandler<PurchaseProductCmd, IdCommandResult>>();
-            builder.RegisterType<PurchaseProductCmdHandler>()
-    .As<CommandHandler<PurchaseProductCmd, IdCommandResult>>();
+            // CreateCommandHandlers
+            builder.RegisterType<EntityCreateCommandHandler<IProduct>>()
+                .As<CommandHandler<EntityCreateCommand<IProduct>, IdCommandResult>>();
 
-
-            builder.RegisterType<IssuedCmdHandler<IProduct>>()
-                .As<CommandHandler<IssuedCmd<IProduct>, IdCommandResult>>();
-            builder.RegisterType<PurchaseProductCmdHandler>()
-    .As<CommandHandler<PurchaseProductCmd, IdCommandResult>>();
-
+            builder.RegisterType<EntityCreateCommandHandler<IOrder>>()
+                            .As<CommandHandler<EntityCreateCommand<IOrder>, IdCommandResult>>();
         }
     }
 }

@@ -1,24 +1,21 @@
-﻿using ModelInterface.Interface;
+﻿using ModelInterface.Interface.Elements;
 
 namespace Persistence.Entities
 {
-    internal class Product : IProduct
+    internal class ProductEntity : IProduct
     {
-        public string Id { get; set; } = string.Empty;
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
         public decimal Price { get; set; } = 0;
 
-        public int Quantity { get; set; } = 0;
-
-        public Product(IProduct product)
+        public ProductEntity(IProduct product)
         {
             Id = product.Id;
             Name = product.Name;
             Description = product.Description;
             Price = product.Price;
-            Quantity = product.Quantity;
         }
     }
 }

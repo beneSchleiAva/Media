@@ -1,11 +1,11 @@
 ﻿
 using CQRS.Mediatr.Lite;
-using Events.Events;
+using Events.Events.CreateEntity;
 using Events.EventsStore;
 
 namespace Events.RequestHandler
 {
-    public class EventRequestHandler<T, U> : CQRS.Mediatr.Lite.EventHandler<T> where T : IssuedEvent<U> where U : class
+    public class EventRequestHandler<T, U> : CQRS.Mediatr.Lite.EventHandler<T> where T : CreateEvent<U> where U : class
     {
         private readonly IEventsStore _eventStore;
 
