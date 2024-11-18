@@ -1,15 +1,14 @@
 ﻿using CQRS.Mediatr.Lite;
-using ModelInterface.Interface;
 
 namespace Events.Queries
 {
-    public class GetProductsQuery : Query<IEnumerable<IProduct>>
+    public class GetAllQuery<T> : Query<IEnumerable<T>>
     {
-        public override string DisplayName => nameof(GetProductsQuery);
+        public override string DisplayName => nameof(GetAllQuery<T>);
 
         public override string Id { get; }
 
-        public GetProductsQuery()
+        public GetAllQuery()
         {
             Id = Guid.NewGuid().ToString();
         }

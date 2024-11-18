@@ -22,8 +22,10 @@ Welcome to your new app.
         {
             var product = ProductFactory.CreateProduct("in2dia", "Pdesc", 100, 5);
 
-            PurchaseProductCmd command = new(product);
-            IdCommandResult result = CommandBus.Send(command).Result;
+            IssuedCmd<IProduct> cmd = new(product);
+            // PurchaseProductCmd command = new(product);
+            IdCommandResult result = CommandBus.Send(cmd).Result;
+            // IdCommandResult result = CommandBus.Send(command).Result;
 
             product = ProductFactory.CreateProduct("india", "Pdesc", 100, 5);
 
