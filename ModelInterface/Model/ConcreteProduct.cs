@@ -1,29 +1,23 @@
-﻿using ModelInterface.Interface;
+﻿using ModelInterface.Interface.Elements;
 
 namespace ModelInterface.Model
 {
-    internal class Product : IProduct
+    internal class ConcreteProduct : IProduct
     {
-        public string Id
-        {
-            get { return Id ?? ""; }
-            private set
-            {
-                Id = value;
-            }
-        }
+        public Guid Id { get; private set; }
+
         public string Name { get; private set; }
         public string Description { get; private set; }
         public decimal Price { get; private set; }
         public int Quantity { get; private set; }
 
 
-        public Product(string name, string description, decimal price, int quantity)
+        public ConcreteProduct(string name, string description, decimal price)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Price = price;
-            Quantity = quantity;
         }
     }
 }

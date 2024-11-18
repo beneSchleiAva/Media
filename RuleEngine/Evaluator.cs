@@ -1,5 +1,5 @@
 ﻿using Evaluation.CustomRules;
-using ModelInterface.Interface;
+using ModelInterface.Interface.Elements;
 
 namespace Evaluation
 {

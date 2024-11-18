@@ -1,31 +1,32 @@
 ﻿using CQRS.Mediatr.Lite;
+using Events.AggregateRoot;
 using ModelInterface.Interface;
 
-namespace Events.Commands
+namespace Events.Commands.CreateEntity
 {
-    public class IssuedCmdHandler<T> : CommandHandler<IssuedCmd<T>, IdCommandResult> where T : class
+    public class EntityCreateCommandHandler<T> : CommandHandler<EntityCreateCommand<T>, IdCommandResult> where T : class
     {
         private readonly IRepository<T> repository;
         private readonly IEventBus _eventBus;
 
-        public IssuedCmdHandler(IRepository<T> repository, IEventBus eventBus)
+        public EntityCreateCommandHandler(IRepository<T> repository, IEventBus eventBus)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
-        protected override async Task<IdCommandResult> ProcessRequest(IssuedCmd<T> request)
+        protected override async Task<IdCommandResult> ProcessRequest(EntityCreateCommand<T> request)
         {
-            AggregateRoot<T> aggregateRoot = new();
+            CreateEntityAggregateRoot<T> aggregateRoot = new();
             if (request.Item is not null)
             {
-
-                aggregateRoot.CreateProduct("Name", request.Item);
+               
+                aggregateRoot.Create(request.Item);
                 repository.AddOrUpdate(request.Item);
                 await _eventBus.Send(aggregateRoot.UncommittedEvents);
             }
 
-            return new IdCommandResult(aggregateRoot.Id);
+            return new IdCommandResult(aggregateRoot.Id.ToString());
         }
 
     }

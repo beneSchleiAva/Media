@@ -1,9 +1,12 @@
 ﻿@page "/"
 @using CQRS.Mediatr.Lite
 @using Events.Commands
+@using Events.Commands.CreateEntity
 @using Events.Queries
 @using ModelInterface.Factories
-@using ModelInterface.Interface
+@using ModelInterface.Interface;
+@using ModelInterface.Interface.Aggregates
+@using ModelInterface.Interface.Elements
 
 @inject ICommandBus CommandBus
 @inject IQueryService QueryService
@@ -18,34 +21,27 @@ Welcome to your new app.
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
-        try
+
+        EntityCreateCommand<IProduct> productCmd = new(productName: "productName", productDescription: "productDescription", productPrice: 100);
+        IdCommandResult result = CommandBus.Send(productCmd).Result;
+
+        GetAllQuery<IProduct> query = new();
+        IEnumerable<IProduct> products = await QueryService.Query(query);
+
+        Console.WriteLine($"Any?: {products.Any()}");
+        Random random = new();
+        if (products is not null && products.Any())
         {
-            var product = ProductFactory.CreateProduct("in2dia", "Pdesc", 100, 5);
+            var product = products.First();
+            List<IOrderPosition> orderPositions = new();
+            for (int i = 0; i < 10; i++)
+                orderPositions.Add(OrderPositionFactory.Create(productId: product.Id, quantity: random.Next(1, 100), totalPrice: 10m, discount: random.Next(0, 50)));
 
-            IssuedCmd<IProduct> cmd = new(product);
-            // PurchaseProductCmd command = new(product);
-            IdCommandResult result = CommandBus.Send(cmd).Result;
-            // IdCommandResult result = CommandBus.Send(command).Result;
-
-            product = ProductFactory.CreateProduct("india", "Pdesc", 100, 5);
-
-            command = new(product);
-            result = CommandBus.Send(command).Result;
-
-            GetProductsQuery query = new();
-            IEnumerable<IProduct> products = await QueryService.Query(query);
-            products.ToList().ForEach(p => Console.WriteLine(p.Name));
-            if (products is not null && products.Any())
-            {
-                foreach (var p in products)
-                {
-                    var evaresult = Evaluation.Evaluator<IProduct>.Evaluate(p);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            throw;
+            EntityCreateCommand<IOrder> orderCmd = new(orderPositions);
+            result = CommandBus.Send(orderCmd).Result;
+            GetAllQuery<IOrder> queryOrder = new();
+            IEnumerable<IOrder> orders = await QueryService.Query(queryOrder);
+            var p = orders.First().GetTotalPrice();
         }
     }
 }

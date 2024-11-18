@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ModelInterface\ModelInterface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Aggregates\" />
+  </ItemGroup>
+
 </Project>
