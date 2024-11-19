@@ -9,7 +9,7 @@ assignees: ''
 
 ## Description ##
 
-##Acceptance Criteria##
+## Acceptance Criteria ##
 
-##Tasks##
+## Tasks ##
 - [ ] Task
