@@ -21,7 +21,7 @@ namespace Events.Commands.CreateEntity
                 Item = (T?)ProductFactory.CreateProduct(productName, productDescription, productPrice);
         }
 
-        public EntityCreateCommand(List<IOrderPosition> positions)
+        public EntityCreateCommand(IEnumerable<IOrderPosition> positions)
         {
             Id = Guid.NewGuid().ToString();
             DisplayName = nameof(EntityCreateCommand<T>);

@@ -1,6 +1,7 @@
 using Media.Components;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using MudBlazor.Services;
 
 namespace Media
 {
@@ -15,6 +16,8 @@ namespace Media
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            builder.Services.AddMudServices();
 
             var app = builder.Build();
 
