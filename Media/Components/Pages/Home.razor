@@ -11,37 +11,155 @@
 @inject ICommandBus CommandBus
 @inject IQueryService QueryService
 
-<PageTitle>Home</PageTitle>
+<MudGrid Class="ma-6" Justify="Justify.SpaceAround">
+    <MudItem xs="5" Class="dflex">
+        <MudGrid>
 
-<h1>Hello, world!</h1>
+            <MudItem xs="12">
+                <MudSelect @bind-Value="selectedProduct" Label="Select a product" Placeholder="Please Select">
+                    @if (products is not null)
+                        foreach (IProduct product in products)
+                        {
+                            <MudSelectItem Value="@product">@product.Name</MudSelectItem>
+                        }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudNumericField @bind-Value="selectedQuantity" Label="Quantity" Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudNumericField @bind-Value="selectedPrice" Label="Price" Variant="Variant.Outlined" Step=".2M" />
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12">
+                <MudButton OnClick="AssignCallback" Variant="Variant.Filled">Assign</MudButton>
+            </MudItem>
+            <MudItem xs="12">
+                <OrderPositionTable OrderPositions="orderPositions"/>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="5">
+        <MudGrid>
 
-Welcome to your new app.
-
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" OnClick="OrderCallback">Process to  Order</MudButton>
+            </MudItem>
+            <MudItem xs="12">
+                @{
+                    if (orders is not null)
+                        foreach (var order in orders)
+                        {
+                            <MudCard>
+                                <MudCardContent>
+                                    <MudText>Order: @order.Id</MudText>
+                                    <MudText>Amount: @order.GetTotalPrice()</MudText>
+                                </MudCardContent>
+                            </MudCard>
+                            <OrderPositionTable OrderPositions="@order.Positions" />
+                        }
+                }
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>
 @code {
-    protected override async Task OnInitializedAsync()
+    IProduct? selectedProduct = null;
+    Decimal selectedPrice;
+    int selectedQuantity;
+
+    IEnumerable<IProduct>? products = null;
+    IEnumerable<IOrder>? orders = null;
+    List<IOrderPosition> orderPositions = new();
+    Dictionary<Guid, string> ProductIdName = new();
+    Dictionary<Guid, decimal> ProductIdPríce = new();
+
+    EventCallback<MouseEventArgs> AssignCallback => new(null, AssignProduct);
+
+    void AssignProduct(MouseEventArgs args)
     {
-        base.OnInitialized();
-
-        EntityCreateCommand<IProduct> productCmd = new(productName: "productName", productDescription: "productDescription", productPrice: 100);
-        IdCommandResult result = CommandBus.Send(productCmd).Result;
-
-        GetAllQuery<IProduct> query = new();
-        IEnumerable<IProduct> products = await QueryService.Query(query);
-
-        Console.WriteLine($"Any?: {products.Any()}");
-        Random random = new();
-        if (products is not null && products.Any())
+        if (selectedProduct is not null && selectedQuantity > 0 && selectedPrice > 0)
         {
-            var product = products.First();
-            List<IOrderPosition> orderPositions = new();
-            for (int i = 0; i < 10; i++)
-                orderPositions.Add(OrderPositionFactory.Create(productId: product.Id, quantity: random.Next(1, 100), totalPrice: 10m, discount: random.Next(0, 50)));
 
-            EntityCreateCommand<IOrder> orderCmd = new(orderPositions);
-            result = CommandBus.Send(orderCmd).Result;
-            GetAllQuery<IOrder> queryOrder = new();
-            IEnumerable<IOrder> orders = await QueryService.Query(queryOrder);
-            var p = orders.First().GetTotalPrice();
+            var productPrice = ProductIdPríce[selectedProduct.Id];
+            if (productPrice > 0)
+            {
+
+                var position = OrderPositionFactory.Create(productId: selectedProduct.Id, productName: selectedProduct.Name, productPrice: productPrice, quantity: selectedQuantity, totalPrice: selectedPrice);
+                if (position is not null)
+                {
+                    orderPositions.Add(position);
+                    InvokeAsync(StateHasChanged);
+                }
+            }
+
         }
+    }
+
+    EventCallback<MouseEventArgs> OrderCallback => new(null, Order);
+
+    async Task Order(MouseEventArgs args)
+    {
+        if (orderPositions.Any())
+        {
+            var positions = new IOrderPosition[orderPositions.Count];
+            orderPositions.CopyTo(positions);
+
+            EntityCreateCommand<IOrder> orderCmd = new(positions);
+            var result = await CommandBus.Send(orderCmd);
+            orderPositions.Clear();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        List<string>
+        names = new List<string>
+        () { "Round", "Square", "Rectangle" };
+        List<string>
+        descriptions = new List<string>
+        () { "Italian", "American", "German" };
+        List<int>
+        discounts = new List<int>
+        () { 10, 15, 13 };
+        List<decimal>
+        prices = new List<decimal>
+        () { 10.45m, 12, 88m, 13m };
+        Random random = new();
+
+        if (firstRender)
+        {
+            for (int i = 0; i < names.Count(); i++)
+            {
+                EntityCreateCommand<IProduct>
+                productCmd = new(productName: names[i], productDescription: descriptions[i], prices[i]);
+                var result = await CommandBus.Send(productCmd);
+            }
+
+            await Refresh().ContinueWith(async t =>
+            {
+                if (products is not null)
+                {
+                    products.ToList().ForEach(p => ProductIdName.Add(p.Id, p.Name));
+                    products.ToList().ForEach(p => ProductIdPríce.Add(p.Id, p.Price));
+                }
+                await InvokeAsync(StateHasChanged);
+            });
+
+        }
+    }
+
+
+    async Task Refresh()
+    {
+        var queryProducts = new GetAllQuery<IProduct>();
+        products = await QueryService.Query(queryProducts);
+
+        var queryOrders = new GetAllQuery<IOrder>();
+        orders = await QueryService.Query(queryOrders);
     }
 }

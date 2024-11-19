@@ -11,7 +11,7 @@ namespace ModelInterface.Model
 
         public IEnumerable<IOrderPosition> Positions { get; private set; }
 
-        public ConcreteOrder(List<IOrderPosition> positions)
+        public ConcreteOrder(IEnumerable<IOrderPosition> positions)
         {
             Id = Guid.NewGuid();
             DisplayName = Id.ToString();
