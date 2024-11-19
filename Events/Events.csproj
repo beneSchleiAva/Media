@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModelInterface\ModelInterface.csproj" />
+    <ProjectReference Include="..\RuleEngine\Evaluation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
