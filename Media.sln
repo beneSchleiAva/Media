@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base", "Base\Base.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{AEF1DB8D-3A58-423A-BD9A-D4D49688A9AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evaluation", "RuleEngine\Evaluation.csproj", "{1B30E035-C2AC-4977-BDA9-D99917F5B902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evaluation", "RuleEngine\Evaluation.csproj", "{1B30E035-C2AC-4977-BDA9-D99917F5B902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

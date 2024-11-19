@@ -6,7 +6,7 @@ namespace ModelInterface.Factories
 {
     public class OrderFactory
     {
-        public static IOrder Create(List<IOrderPosition> positions)
+        public static IOrder Create(IEnumerable<IOrderPosition> positions)
         {
             return new ConcreteOrder(positions);
         }
