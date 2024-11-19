@@ -35,7 +35,7 @@
                 </MudGrid>
             </MudItem>
             <MudItem xs="12">
-                <MudButton OnClick="AssignCallback" Variant="Variant.Filled">Assign</MudButton>
+                <MudButton OnClick="AssignOrderPositionCallback" Variant="Variant.Filled">Assign</MudButton>
             </MudItem>
             <MudItem xs="12">
                 <OrderPositionTable OrderPositions="orderPositions"/>
@@ -77,28 +77,7 @@
     Dictionary<Guid, string> ProductIdName = new();
     Dictionary<Guid, decimal> ProductIdPríce = new();
 
-    EventCallback<MouseEventArgs> AssignCallback => new(null, AssignProduct);
-
-    void AssignProduct(MouseEventArgs args)
-    {
-        if (selectedProduct is not null && selectedQuantity > 0 && selectedPrice > 0)
-        {
-
-            var productPrice = ProductIdPríce[selectedProduct.Id];
-            if (productPrice > 0)
-            {
-
-                var position = OrderPositionFactory.Create(productId: selectedProduct.Id, productName: selectedProduct.Name, productPrice: productPrice, quantity: selectedQuantity, totalPrice: selectedPrice);
-                if (position is not null)
-                {
-                    orderPositions.Add(position);
-                    InvokeAsync(StateHasChanged);
-                }
-            }
-
-        }
-    }
-
+ 
     EventCallback<MouseEventArgs> OrderCallback => new(null, Order);
 
     async Task Order(MouseEventArgs args)

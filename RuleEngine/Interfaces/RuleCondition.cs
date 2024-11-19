@@ -1,15 +1,17 @@
 ﻿namespace Evaluation.Interfaces
 {
-    internal enum RuleName
+    public enum RuleName
     {
-        ProductNameRule
+        ProductNameRule,
+        OrderPositionQuantityRule
     }
-    internal enum WorkflowName
+    public enum WorkflowName
     {
-        ProductWorkflow
+        ProductWorkflow,
+        OrderPositionWorkflow
     }
 
-    internal record RuleCondition
+     public record RuleCondition
     {
         public RuleName RuleName { get; init; }
         public string Property { get; init; }
@@ -23,5 +25,7 @@
             Operator = @operator;
             Criteria = criteria;
         }
+
+        
     }
 }

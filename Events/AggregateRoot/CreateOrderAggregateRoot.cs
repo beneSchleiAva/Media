@@ -15,6 +15,8 @@ namespace Events.AggregateRoot
             if (positions is not null)
             {
                 Positions = positions;
+                bool isValid = true;
+
                 UncommittedEvents.Add(new CreateEvent<T>(this));
             }
         }
