@@ -18,7 +18,7 @@ namespace Events.Commands.CreateEntity
             Id = Guid.NewGuid().ToString();
             DisplayName = nameof(EntityCreateCommand<T>);
             if (typeof(T) == typeof(IProduct))
-                Item = (T?)ProductFactory.CreateProduct(productName, productDescription, productPrice);
+                Item = (T?)ProductFactory.Create(productName, productDescription, productPrice);
         }
 
         public EntityCreateCommand(IEnumerable<IOrderPosition> positions)

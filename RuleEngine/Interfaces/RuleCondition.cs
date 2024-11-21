@@ -2,9 +2,10 @@
 {
     public enum RuleName
     {
-        ProductNameRule,
+        ProductQuantityRule,
         OrderPositionQuantityRule
     }
+
     public enum WorkflowName
     {
         ProductWorkflow,

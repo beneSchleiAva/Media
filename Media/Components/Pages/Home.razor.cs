@@ -7,26 +7,18 @@ namespace Media.Components.Pages
 {
     public partial class Home
     {
-        public OrderPositonRule orderPositionRule = new();
         EventCallback<MouseEventArgs> AssignOrderPositionCallback => new(null, AssignOrderPositionToProduct);
 
-        void AssignOrderPositionToProduct(MouseEventArgs args)
+        async Task AssignOrderPositionToProduct(MouseEventArgs args)
         {
-            if (selectedProduct is not null && selectedPrice > 0)
+            if (selectedProduct is not null && await ProductRule.Evaluate(selectedProduct))
             {
-
-                var productPrice = ProductIdPríce[selectedProduct.Id];
-                if (productPrice > 0)
+                var position = OrderPositionFactory.Create(product: selectedProduct, quantity: selectedQuantity, totalPrice: selectedPrice);
+                if (position is not null && OrderPositonRule.Evaluate(position).Result)
                 {
-
-                    var position = OrderPositionFactory.Create(productId: selectedProduct.Id, productName: selectedProduct.Name, productPrice: productPrice, quantity: selectedQuantity, totalPrice: selectedPrice);
-                    if (position is not null && orderPositionRule.Evaluate(position).Result)
-                    {
-                        orderPositions.Add(position);
-                        InvokeAsync(StateHasChanged);
-                    }
+                    orderPositions.Add(position);
+                    await InvokeAsync(StateHasChanged);
                 }
-
             }
         }
 

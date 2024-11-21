@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evaluation", "RuleEngine\Evaluation.csproj", "{1B30E035-C2AC-4977-BDA9-D99917F5B902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Evaluation", "Test.Evaluation\Test.Evaluation.csproj", "{E9BF0438-C603-4AA2-872B-8F8305E5FB58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Evaluation", "Test.Evaluation\Test.Evaluation.csproj", "{E9BF0438-C603-4AA2-872B-8F8305E5FB58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28AA3CBC-7316-481D-B0C1-BCFBAEA9AA0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

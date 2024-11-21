@@ -30,7 +30,7 @@
                         <MudNumericField @bind-Value="selectedQuantity" Label="Quantity" Variant="Variant.Outlined" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudNumericField @bind-Value="selectedPrice" Label="Price" Variant="Variant.Outlined" Step=".2M" />
+                        <MudNumericField @bind-Value="selectedPrice" Label="TotalPrice billed" Variant="Variant.Outlined" Step=".2M" />
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -76,8 +76,6 @@
     List<IOrderPosition> orderPositions = new();
     Dictionary<Guid, string> ProductIdName = new();
     Dictionary<Guid, decimal> ProductIdPríce = new();
-
- 
     EventCallback<MouseEventArgs> OrderCallback => new(null, Order);
 
     async Task Order(MouseEventArgs args)
@@ -107,7 +105,7 @@
         () { 10, 15, 13 };
         List<decimal>
         prices = new List<decimal>
-        () { 10.45m, 12, 88m, 13m };
+        () { 0, 12, 88m, 13m };
         Random random = new();
 
         if (firstRender)
@@ -131,7 +129,6 @@
 
         }
     }
-
 
     async Task Refresh()
     {
