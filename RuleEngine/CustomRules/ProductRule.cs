@@ -8,10 +8,10 @@ namespace Evaluation.CustomRules
         public static Lazy<BaseCustomRule<IProduct>> rule = new Lazy<BaseCustomRule<IProduct>>(GetProductRule);
         private static BaseCustomRule<IProduct> GetProductRule()
         {
-            return new BaseCustomRule<IProduct>(new List<RuleCondition>() { new(RuleName.ProductNameRule, "Name", "==", "\"india\"") });
+            return new BaseCustomRule<IProduct>(new List<RuleCondition>() { new(RuleName.ProductQuantityRule, "Price", ">", 0.ToString()) });
         }
 
-        public async Task<bool> Evaluate(IProduct product)
+        public static async Task<bool> Evaluate(IProduct product)
         {
             return await rule.Value.Evaluate(product);
         }

@@ -1,6 +1,7 @@
 using Evaluation.CustomRules;
 using ModelInterface.Factories;
 using ModelInterface.Interface.Aggregates;
+using ModelInterface.Interface.Elements;
 
 namespace Test.Evaluation
 {
@@ -11,13 +12,15 @@ namespace Test.Evaluation
         IOrderPosition? inValidPosition;
         IOrderPosition? zeroPosition;
 
+        IProduct? product;
+
         [SetUp]
         public void Setup()
         {
-            rule = new OrderPositonRule();
-            validPosition = OrderPositionFactory.Create(Guid.NewGuid(), "TestName", 12m, 12, 14);
-            inValidPosition = OrderPositionFactory.Create(Guid.NewGuid(), "TestName", 12m, 12, -1);
-            zeroPosition = OrderPositionFactory.Create(Guid.NewGuid(), "TestName", 12m, 2,0);
+            product = ProductFactory.Create("TestName", "TestDescription", 122.20m);
+            validPosition = OrderPositionFactory.Create(product, 12, 14);
+            inValidPosition = OrderPositionFactory.Create(product, 12, -1);
+            zeroPosition = OrderPositionFactory.Create(product, 2, 0);
         }
 
         [Test]
@@ -27,7 +30,7 @@ namespace Test.Evaluation
                 Assert.Fail();
             else
             {
-                var result = await rule.Evaluate(validPosition);
+                var result = await OrderPositonRule.Evaluate(validPosition);
                 Assert.IsTrue(result);
             }
         }
@@ -39,7 +42,7 @@ namespace Test.Evaluation
                 Assert.Fail();
             else
             {
-                var result = await rule.Evaluate(inValidPosition);
+                var result = await OrderPositonRule.Evaluate(inValidPosition);
                 Assert.IsFalse(result);
             }
         }
@@ -51,7 +54,7 @@ namespace Test.Evaluation
                 Assert.Fail();
             else
             {
-                var result = await rule.Evaluate(zeroPosition);
+                var result = await OrderPositonRule.Evaluate(zeroPosition);
                 Assert.IsFalse(result);
             }
         }

@@ -11,7 +11,7 @@ namespace Evaluation.CustomRules
             return new BaseCustomRule<IOrderPosition>(new List<RuleCondition>() { new(RuleName.OrderPositionQuantityRule, "Quantity", ">", 0.ToString()) });
         }
 
-        public async Task<bool> Evaluate(IOrderPosition item)
+        public static async Task<bool> Evaluate(IOrderPosition item)
         {
             return await rule.Value.Evaluate(item);
         }

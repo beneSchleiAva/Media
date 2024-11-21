@@ -1,30 +1,31 @@
 ﻿using ModelInterface.Interface.Aggregates;
+using ModelInterface.Interface.Elements;
 
 namespace ModelInterface.Model
 {
     internal class ConcreteOrderPosition : IOrderPosition
     {
-        public string ProductName { get; private set; }
         public int Quantity { get; private set; }
-
         public decimal TotalPrice { get; private set; }
-        public decimal ProductPrice { get; private set; }
 
         public Guid ProductId { get; private set; }
+        public string ProductName { get; private set; }
+        public decimal ProductPrice { get; private set; }
 
-        public ConcreteOrderPosition(Guid productId, string productName, decimal productPrice, decimal totalPrice, int quantity)
+
+        public ConcreteOrderPosition(IProduct product, decimal totalPrice, int quantity)
         {
-            ProductId = productId;
-            ProductName = productName;
+            ProductId = product.Id;
+            ProductName = product.Name;
             TotalPrice = totalPrice;
-            ProductPrice = productPrice;
+            ProductPrice = product.Price;
             Quantity = quantity;
 
         }
 
         public decimal CalculateGivenDiscount()
         {
-            return Math.Round(((TotalPrice - (ProductPrice * Quantity)) / (ProductPrice)), 2);
+            return Math.Round(((TotalPrice - (ProductPrice * Quantity)) / (ProductPrice*Quantity)), 2);
         }
     }
 }
