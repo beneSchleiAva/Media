@@ -5,9 +5,9 @@ using Events.Events.CreateEntity;
 using Events.EventsStore;
 using Events.EventStore;
 using Events.Queries;
-using Events.Repositories;
 using ModelInterface.Interface;
 using ModelInterface.Interface.Elements;
+using Persistence.Repositories;
 namespace Media
 {
     public class DependencyModule : Module
