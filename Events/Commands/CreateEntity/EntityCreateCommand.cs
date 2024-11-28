@@ -23,6 +23,7 @@ namespace Events.Commands.CreateEntity
 
         public EntityCreateCommand(IEnumerable<IOrderPosition> positions)
         {
+            //1
             Id = Guid.NewGuid().ToString();
             DisplayName = nameof(EntityCreateCommand<T>);
             if (typeof(T) == typeof(IOrder))
@@ -31,7 +32,7 @@ namespace Events.Commands.CreateEntity
 
         public override bool Validate(out string ValidationErrorMessage)
         {
-
+            //2
             if (Item != null)
             {
                 ValidationErrorMessage = "Valid";

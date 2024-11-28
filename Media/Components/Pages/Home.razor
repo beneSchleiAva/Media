@@ -38,7 +38,7 @@
                 <MudButton OnClick="AssignOrderPositionCallback" Variant="Variant.Filled">Assign</MudButton>
             </MudItem>
             <MudItem xs="12">
-                <OrderPositionTable OrderPositions="orderPositions"/>
+                <OrderPositionTable OrderPositions="orderPositions" />
             </MudItem>
         </MudGrid>
     </MudItem>
@@ -86,9 +86,11 @@
             orderPositions.CopyTo(positions);
 
             EntityCreateCommand<IOrder> orderCmd = new(positions);
-            var result = await CommandBus.Send(orderCmd);
-            orderPositions.Clear();
-            await InvokeAsync(StateHasChanged);
+            var result = await CommandBus.Send(orderCmd).ContinueWith(async t =>
+            {
+                orderPositions.Clear();
+                await InvokeAsync(StateHasChanged);
+            });
         }
     }
 
@@ -105,7 +107,7 @@
         () { 10, 15, 13 };
         List<decimal>
         prices = new List<decimal>
-        () { 0, 12, 88m, 13m };
+        () { 12, 88m, 13m };
         Random random = new();
 
         if (firstRender)

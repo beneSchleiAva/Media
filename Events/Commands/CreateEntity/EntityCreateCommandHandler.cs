@@ -25,27 +25,18 @@ namespace Events.Commands.CreateEntity
 
         protected override async Task<IdCommandResult> ProcessRequest(EntityCreateCommand<T> request)
         {
+            //3 if valid
             CreateEntityAggregateRoot<T> aggregateRoot = new();
             if (request.Item is not null)
             {
 
                 aggregateRoot.Create(request.Item);
                 repository.AddOrUpdate(request.Item);
+                await _eventBus.Send(new EntityCreatedEvent<T>(request.Item));
 
-                if (typeof(T) == typeof(IOrder))
-                {
-                    var product = ProductFactory.Create("", "", 12m);
-                    var op = OrderPositionFactory.Create(product, 43546m, 456);
-                    var opl = new List<IOrderPosition>() { op };
-                    var i = OrderFactory.Create(opl);
-                    var ev = new EntityCreatedEvent<IOrder>(i);
-                    await  _eventBus.Send(ev);
-                   
-                }
             }
 
             return new IdCommandResult(aggregateRoot.Id.ToString());
         }
-
     }
 }

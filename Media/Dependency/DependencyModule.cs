@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using CQRS.Mediatr.Lite;
 using Events.Commands.CreateEntity;
-using Events.Events.CreateEntity;
 using Events.Events.EntityCreated;
 using Events.EventsStore;
 using Events.EventStore;
@@ -64,13 +63,6 @@ namespace Media.Dependency
 
             #region EventHandlers
 
-            builder.RegisterType<CreateEventHandler<CreateEvent<IProduct>, IProduct>>()
-                .As<CQRS.Mediatr.Lite.EventHandler<CreateEvent<IProduct>>>()
-                .SingleInstance();
-
-            builder.RegisterType<CreateEventHandler<CreateEvent<IOrder>, IOrder>>()
-                .As<CQRS.Mediatr.Lite.EventHandler<CreateEvent<IOrder>>>()
-                .SingleInstance();
 
             builder.RegisterType<EntityCreatedEventHandler<EntityCreatedEvent<IOrder>, IOrder>>()
                 .As<CQRS.Mediatr.Lite.EventHandler<EntityCreatedEvent<IOrder>>>()
