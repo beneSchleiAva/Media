@@ -1,11 +1,13 @@
 ﻿using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.Elements;
+using ModelInterface.Interface.ValueObjects;
+using ModelInterface.Model.ValueObjects;
 
 namespace ModelInterface.Model
 {
     internal class ConcreteOrder : IOrder
     {
-        public Guid Id { get; private set; }
+        public IOrderId? Id { get; private set; }
 
         public string DisplayName { get; private set; }
 
@@ -13,14 +15,14 @@ namespace ModelInterface.Model
 
         public ConcreteOrder(IEnumerable<IOrderPosition> positions)
         {
-            Id = Guid.NewGuid();
-            DisplayName = Id.ToString();
+            Id = new ConcreteOrderId();
+            DisplayName = Id.Value.ToString();
             Positions = positions;
         }
 
         public decimal GetTotalPrice()
         {
-            return Positions.Sum(p => p.TotalPrice);
+            return Positions.Sum(p => p.OrderDescription.TotalPrice);
         }
     }
 }

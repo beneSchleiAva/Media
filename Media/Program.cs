@@ -2,6 +2,7 @@ using Media.Components;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MudBlazor.Services;
+using Media.Dependency;
 
 namespace Media
 {
@@ -12,7 +13,7 @@ namespace Media
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(ConfigureContainer);
-
+            
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
@@ -41,8 +42,7 @@ namespace Media
         }
         private static void ConfigureContainer(ContainerBuilder builder)
         {
-            // Register your Autofac modules or services here
-            builder.RegisterModule<DependencyModule>();
+             builder.RegisterModule<DependencyModule>();
         }
     }
 }

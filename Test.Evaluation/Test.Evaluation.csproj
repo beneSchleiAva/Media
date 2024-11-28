@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModelInterface\ModelInterface.csproj" />
+    <ProjectReference Include="..\ModelInterface\FactoringDomain.csproj" />
     <ProjectReference Include="..\RuleEngine\Evaluation.csproj" />
   </ItemGroup>
 

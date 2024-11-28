@@ -1,12 +1,12 @@
-﻿namespace ModelInterface.Interface.Aggregates
+﻿using ModelInterface.Interface.ValueObjects;
+
+namespace ModelInterface.Interface.Aggregates
 {
     public interface IOrderPosition
     {
-        Guid ProductId { get; }
-        string ProductName { get; }
-        decimal ProductPrice { get; }
-        int Quantity { get; }
-        decimal TotalPrice { get; }
+        IProductId ProductId { get; }
+        IProductPrice ProductPrice { get; }
+        IOrderDescription OrderDescription { get; }
 
         decimal CalculateGivenDiscount();
     }

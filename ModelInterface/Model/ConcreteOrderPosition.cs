@@ -1,31 +1,38 @@
-﻿using ModelInterface.Interface.Aggregates;
+﻿using FactoringDomain.Model.ValueObjects.Product;
+using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.Elements;
+using ModelInterface.Interface.ValueObjects;
 
 namespace ModelInterface.Model
 {
     internal class ConcreteOrderPosition : IOrderPosition
     {
-        public int Quantity { get; private set; }
-        public decimal TotalPrice { get; private set; }
+        public IOrderDescription OrderDescription { get; private set; }
+        public IProductId ProductId { get; private set; }
+        public IProductPrice ProductPrice { get; private set; }
+        public DateTime Created { get; private set; }
 
-        public Guid ProductId { get; private set; }
-        public string ProductName { get; private set; }
-        public decimal ProductPrice { get; private set; }
-
-
-        public ConcreteOrderPosition(IProduct product, decimal totalPrice, int quantity)
+        public ConcreteOrderPosition(IProduct product, IOrderDescription orderDescription)
         {
-            ProductId = product.Id;
-            ProductName = product.Name;
-            TotalPrice = totalPrice;
-            ProductPrice = product.Price;
-            Quantity = quantity;
+            if (product.Id is not null)
+                ProductId = product.Id;
+            else
+                ProductId = new ConcreteProductId();
 
+            if (product.Price is not null)
+                ProductPrice = product.Price;
+            else
+                ProductPrice = new ConcreteProductPrice(0);
+
+            OrderDescription = orderDescription;
+            Created = DateTime.Now;
         }
 
         public decimal CalculateGivenDiscount()
         {
-            return Math.Round(((TotalPrice - (ProductPrice * Quantity)) / (ProductPrice*Quantity)), 2);
+            if (ProductPrice.Value == 0)
+                return decimal.MinValue;
+            return Math.Round((OrderDescription.TotalPrice - ProductPrice.Value * OrderDescription.Quantity) / (ProductPrice.Value * OrderDescription.Quantity), 2);
         }
     }
 }
