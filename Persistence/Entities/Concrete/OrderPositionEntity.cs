@@ -1,7 +1,7 @@
 ﻿using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.Elements;
 
-namespace Persistence.Entities
+namespace Persistence.Entities.Concrete
 {
     internal class OrderPositionEntity
     {

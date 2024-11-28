@@ -1,4 +1,4 @@
-﻿namespace ModelInterface.Interface
+﻿namespace Persistence.Repositories.Abstract
 {
 
     public interface IRepository<T> where T : class

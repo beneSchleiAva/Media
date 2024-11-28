@@ -1,6 +1,7 @@
 ﻿using ModelInterface.Interface;
+using Persistence.Repositories.Abstract;
 
-namespace Persistence.Repositories
+namespace Persistence.Repositories.Concrete
 {
     public class InMemoryRepo<T> : IRepository<T> where T : class
     {

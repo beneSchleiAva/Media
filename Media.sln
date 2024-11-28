@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media", "Media\Media.csproj", "{C833BCAE-8AA1-4E92-AFAA-E122F79B708D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelInterface", "ModelInterface\ModelInterface.csproj", "{91D4FA80-D699-400B-B4C4-59F5C6B084A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoringDomain", "ModelInterface\FactoringDomain.csproj", "{91D4FA80-D699-400B-B4C4-59F5C6B084A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events", "Events\Events.csproj", "{D4888B49-D9E6-498A-A159-DB002BB7F89D}"
 EndProject

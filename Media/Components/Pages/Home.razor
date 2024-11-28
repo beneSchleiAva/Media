@@ -75,7 +75,7 @@
     IEnumerable<IOrder>? orders = null;
     List<IOrderPosition> orderPositions = new();
     Dictionary<Guid, string> ProductIdName = new();
-    Dictionary<Guid, decimal> ProductIdPríce = new();
+    Dictionary<Guid, decimal> ProductIdPrice = new();
     EventCallback<MouseEventArgs> OrderCallback => new(null, Order);
 
     async Task Order(MouseEventArgs args)
@@ -121,8 +121,8 @@
             {
                 if (products is not null)
                 {
-                    products.ToList().ForEach(p => ProductIdName.Add(p.Id, p.Name));
-                    products.ToList().ForEach(p => ProductIdPríce.Add(p.Id, p.Price));
+                    products.ToList().ForEach(p => ProductIdName.Add(p.Id.Value, p.Name));
+                    products.ToList().ForEach(p => ProductIdPrice.Add(p.Id.Value, p.Price.Value));
                 }
                 await InvokeAsync(StateHasChanged);
             });

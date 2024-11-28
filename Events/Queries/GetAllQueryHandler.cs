@@ -1,5 +1,5 @@
 ﻿using CQRS.Mediatr.Lite;
-using ModelInterface.Interface;
+using Persistence.Repositories.Abstract;
 
 namespace Events.Queries
 {

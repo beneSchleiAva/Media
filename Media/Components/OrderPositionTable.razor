@@ -1,16 +1,16 @@
 ﻿<MudTable Items="@OrderPositions" Hover="true" Breakpoint="Breakpoint.Sm">
     <HeaderContent>
-        <MudTh>Product</MudTh>
+        <MudTh>ProductId</MudTh>
         <MudTh>Quantity</MudTh>
         <MudTh>ProductPrice</MudTh>
         <MudTh>TotalPrice</MudTh>
         <MudTh>Discount</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd>@context.ProductName</MudTd>
-        <MudTd>@context.Quantity</MudTd>
-        <MudTd>@context.ProductPrice</MudTd>
-        <MudTd>@context.TotalPrice</MudTd>
+        <MudTd>@context.ProductId.Value</MudTd>
+        <MudTd>@context.OrderDescription.Quantity</MudTd>
+        <MudTd>@context.OrderDescription.TotalPrice</MudTd>
+        <MudTd>@context.ProductPrice.Value</MudTd>
         <MudTd>@context.CalculateGivenDiscount().ToString("P")</MudTd>
     </RowTemplate>
 </MudTable>
