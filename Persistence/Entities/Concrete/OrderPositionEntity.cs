@@ -1,11 +1,14 @@
-﻿using ModelInterface.Interface.Aggregates;
-using ModelInterface.Interface.Elements;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Persistence.Entities.Concrete
 {
-    internal class OrderPositionEntity
+    public class OrderPositionEntity
     {
+        [Key]
         public Guid Id { get; set; }
+        public Guid ProductId { get; set; }
         public int Quantity { get; set; }
+        public decimal BilledUnitPrice { get; set; }
+        public decimal CurrentBookUnitPrice { get; set; }
     }
 }

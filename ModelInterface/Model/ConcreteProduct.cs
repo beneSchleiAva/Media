@@ -7,7 +7,7 @@ namespace ModelInterface.Model
 {
     internal class ConcreteProduct : IProduct
     {
-        public IProductId Id { get; private set; }
+        public IProductId ProductId { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public IProductPrice Price { get; private set; }
@@ -15,7 +15,7 @@ namespace ModelInterface.Model
 
         public ConcreteProduct(string name, string description, decimal price)
         {
-            Id = new ConcreteProductId();
+            ProductId = new ConcreteProductId();
             Name = name;
             Description = description;
             Price = new ConcreteProductPrice(price);

@@ -9,5 +9,9 @@ namespace FactoringDomain.Model.ValueObjects.Product
         {
             Value = Guid.NewGuid();
         }
+        public ConcreteProductId(Guid Id)
+        {
+            Value = Id;
+        }
     }
 }

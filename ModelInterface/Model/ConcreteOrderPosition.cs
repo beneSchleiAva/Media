@@ -14,8 +14,8 @@ namespace ModelInterface.Model
 
         public ConcreteOrderPosition(IProduct product, IOrderDescription orderDescription)
         {
-            if (product.Id is not null)
-                ProductId = product.Id;
+            if (product.ProductId is not null)
+                ProductId = product.ProductId;
             else
                 ProductId = new ConcreteProductId();
 

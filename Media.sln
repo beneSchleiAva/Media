@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Evaluation", "Test.Eva
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28AA3CBC-7316-481D-B0C1-BCFBAEA9AA0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactApi", "ReactApi\ReactApi.csproj", "{147A5E4F-8450-4E0D-B1C8-E8356C95A934}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendBase", "FrontendBase\FrontendBase.csproj", "{AEF4D967-3BC2-491D-BCD7-828902136353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{E9BF0438-C603-4AA2-872B-8F8305E5FB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9BF0438-C603-4AA2-872B-8F8305E5FB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9BF0438-C603-4AA2-872B-8F8305E5FB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{147A5E4F-8450-4E0D-B1C8-E8356C95A934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{147A5E4F-8450-4E0D-B1C8-E8356C95A934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{147A5E4F-8450-4E0D-B1C8-E8356C95A934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{147A5E4F-8450-4E0D-B1C8-E8356C95A934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF4D967-3BC2-491D-BCD7-828902136353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF4D967-3BC2-491D-BCD7-828902136353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF4D967-3BC2-491D-BCD7-828902136353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF4D967-3BC2-491D-BCD7-828902136353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

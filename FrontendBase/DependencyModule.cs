@@ -9,7 +9,7 @@ using ModelInterface.Interface.Elements;
 using Persistence.Repositories.Abstract;
 using Persistence.Repositories.Concrete;
 
-namespace Media.Dependency
+namespace FrontendBase
 {
     public class DependencyModule : Module
     {
@@ -40,7 +40,7 @@ namespace Media.Dependency
 
             #region Storage
 
-            builder.RegisterType<InMemoryRepo<IProduct>>()
+            builder.RegisterType<PersistentDatabaseRepository<IProduct>>()
                 .As<IRepository<IProduct>>()
                 .SingleInstance();
 

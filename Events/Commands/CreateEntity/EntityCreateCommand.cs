@@ -13,6 +13,13 @@ namespace Events.Commands.CreateEntity
         public override string DisplayName { get; }
         public T? Item { get; set; }
 
+
+        public EntityCreateCommand(T item)
+        {
+            Id = Guid.NewGuid().ToString();
+            DisplayName = nameof(EntityCreateCommand<T>);
+            Item = item;
+        }
         public EntityCreateCommand(string productName, string productDescription, decimal productPrice)
         {
             Id = Guid.NewGuid().ToString();

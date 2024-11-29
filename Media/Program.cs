@@ -2,7 +2,7 @@ using Media.Components;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MudBlazor.Services;
-using Media.Dependency;
+using FrontendBase;
 
 namespace Media
 {
