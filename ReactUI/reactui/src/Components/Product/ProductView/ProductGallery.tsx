@@ -1,16 +1,15 @@
-import React from 'react';
 import { useEffect, useState } from 'react'
-
-import { Product } from '../../../Types/Product/Product';
-import Card from '@mui/material/Card';
-
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { IProduct } from '../../../Interfaces/Product/IProduct';
 import { ProductView } from './ProductView';
-import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { Product } from '../../../Types/Product/Product';
+
+export interface ProductGalleryProps {
+  products: Product[]
+}
+
 const useStyles = makeStyles({
   root: {
     width: 300,
@@ -18,19 +17,9 @@ const useStyles = makeStyles({
   },
 });
 
-
-export const ProductGalleryView = () => {
-  const [products, SetProducts] = useState<IProduct[]>([]);
+export const ProductGalleryView = (props: ProductGalleryProps) => {
   const classes = useStyles();
-  useEffect(() => {
-    const GetProducts = async () => {
-      const response = await axios.get<IProduct[]>('https://localhost:7206/Product');
-      SetProducts(response.data);
-    }
-    GetProducts()
-  }, [])
-
-  return <div> <h1 className={classes.root}><Typography>Products</Typography></h1> {products.map((product) => { return <ProductView product={product} />; })} </div>
+  return <div> <h1 className={classes.root}><Typography>Products</Typography></h1> {props.products.map((product) => { return <ProductView product={product} />; })} </div>
 
 }
 

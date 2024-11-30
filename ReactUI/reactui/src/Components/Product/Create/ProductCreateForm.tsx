@@ -3,7 +3,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button } from '@mui/material';
 import { Product } from '../../../Types/Product/Product';
 
-
 export interface ProductCreateFunctionalityProps {
   CreateFunction: (Product: Product) => void;
 }
@@ -15,8 +14,6 @@ export const ProductCreateForm: React.FC<ProductCreateFunctionalityProps> = (pro
     console.log(data);
     props.CreateFunction(data);
   };
-
-  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
