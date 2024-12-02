@@ -35,7 +35,7 @@ namespace ReactApi.Controllers
         [HttpPost(Name = "PostProduct")]
         public async Task<IProduct> Post(ProductUIDto product)
         {
-            EntityCreateCommand<IProduct> productCmd = new(product);
+                EntityCreateCommand<IProduct> productCmd = new(product);
             var result = await _commandBus.Send(productCmd);
             return product;
         }

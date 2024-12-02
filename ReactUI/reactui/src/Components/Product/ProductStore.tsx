@@ -20,7 +20,6 @@ export const ProductStore: React.FC = () => {
     }, [products]);
     const CreateProduct = (product: Product) => {
         axios.post('https://localhost:7206/Product', product);
-        console.log(product);
       }
     return (
         <Grid2 container spacing={2}>
