@@ -9,9 +9,13 @@ import { Product } from '../../Types/Product/Product';
 import { Card, CardContent, Grid2, Typography } from '@mui/material';
 import ProductCreateForm from './Create/ProductCreateForm';
 import { ApiConstants } from '../Constants/Constants';
+import { OrderSelectionView } from './OrderSelectionView/OrderSelectionView';
+import { OrderProduct } from '../../Types/Product/OrderProduct';
+import { OrderProductFactory } from '../../Types/Product/OrderProductFactory';
 
 export const ProductStore: React.FC = () => {
     const [products, SetProducts] = useState<Product[]>([]);
+    const [selectedOrderProducts, SetSelectedOrderProducts] = useState<OrderProduct[]>([]);
     useEffect(() => {
         GetProducts()
     }, []);
@@ -32,8 +36,18 @@ export const ProductStore: React.FC = () => {
         });
     }
 
-    const EditProduct = (product: Product) => {
-        console.log(product);
+    const EditProduct = (editProduct: Product) => {
+        console.log(editProduct);
+    }
+    const CreateOrder = (orderProducts: OrderProduct[]) => {
+        console.log(orderProducts);
+    }
+    const SelectOrderProducts = (selectedProducts: Product[]) => {
+        let orderProducts = selectedProducts.map((product) => {
+            return OrderProductFactory.FromProduct(product);
+        });
+        SetSelectedOrderProducts(orderProducts);
+
     }
 
     return (
@@ -45,11 +59,18 @@ export const ProductStore: React.FC = () => {
                     </CardContent>
                 </Card>
             </Grid2>
-            <Grid2 size={8}>
-                <ProductTable products={products} EditFunction={EditProduct} />
+            <Grid2 size={5}>
+                <ProductTable products={products} EditFunction={EditProduct} SelectOrderFunction={SelectOrderProducts} />
             </Grid2>
-            <Grid2 size={4}>
-                <ProductCreateForm CreateFunction={CreateProduct} />
+            <Grid2 size={7}>
+                <Grid2 container spacing={3}>
+                    <Grid2 size={12}>
+                        <ProductCreateForm CreateFunction={CreateProduct} />
+                    </Grid2>
+                    <Grid2 size={12}>
+                        <OrderSelectionView providedOrderProducts={selectedOrderProducts} CreateFunction={CreateOrder} />
+                    </Grid2>
+                </Grid2>
             </Grid2>
             <Grid2 size={12}>
                 <ProductGalleryView products={products} EditFunction={EditProduct} />

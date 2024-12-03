@@ -3,14 +3,16 @@ import { Product } from '../../../Types/Product/Product';
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
+import { ProductTableEntry } from '@/app/ui/Types/Product/ProductTableEntry';
+import { ProductTableEntryFactory } from '@/app/ui/Types/Product/ProductTableEntryFactory';
 
 export interface ProductTableProperties {
   products: Product[],
   EditFunction: (Product: Product) => void;
+  SelectOrderFunction(Products: Product[]): void;
 }
 
 export const ProductTable = (props: ProductTableProperties) => {
-  const [selectedProducts, setSelectedProducts] = React.useState<Product[]>([])
 
   const columns: GridColDef[] = [
     { field: 'name', headerName: 'Name', width: 200 },
@@ -19,27 +21,12 @@ export const ProductTable = (props: ProductTableProperties) => {
   ];
 
   const values = props.products.map((product) => {
-    let id: string = "";
-    let formattedPrice: string = "";
-    if (product.productIdUIDto != null) { id = product.productIdUIDto.value; };
-    if (product.productPriceUIDto != null) {
-      formattedPrice = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
-        product.productPriceUIDto.value
-      )
-    };
-    return {
-      id: id,
-      name: product.name,
-      description: product.description,
-      price: formattedPrice
-    }
+    return ProductTableEntryFactory.FromProduct(product);
   });
+
   const paginationModel = { page: 0, pageSize: 20 };
   return (
     < Paper sx={{ width: '100%' }}>
-      <div>
-        {selectedProducts.map((product) => { return product.productIdUIDto.value })}
-      </div>
       <DataGrid
         rows={values}
         columns={columns}
@@ -55,7 +42,15 @@ export const ProductTable = (props: ProductTableProperties) => {
               potentialProducts.push(potentialMatch[0]);
             }
           });
-          setSelectedProducts(potentialProducts);
+          props.SelectOrderFunction(potentialProducts);
+        }
+        }
+        localeText={{
+          MuiTablePagination: {
+            labelRowsPerPage: 'Zeilen pro Seite',
+            labelDisplayedRows: ({ from, to, count }) =>
+              `Anzeige der Zeilen ${from} bis ${to} von insgesamt ${count === -1 ? `mehr als ${to} Zeilen` : count} Zeilen`,
+          }
         }
         }
       />
