@@ -4,19 +4,21 @@ import axios from 'axios';
 import { IProduct } from '../../Interfaces/Product/IProduct';
 import React from 'react';
 import { ProductGalleryView } from './ProductView/ProductGallery';
+import { ProductTable } from './ProductView/ProductTable';
 import { Product } from '../../Types/Product/Product';
 import { Card, CardContent, Grid2, Typography } from '@mui/material';
 import ProductCreateForm from './Create/ProductCreateForm';
+import { ApiConstants } from '../Constants/Constants';
 
 export const ProductStore: React.FC = () => {
     const [products, SetProducts] = useState<Product[]>([]);
     useEffect(() => {
         GetProducts()
-    }, [products]);
+    }, []);
 
     const GetProducts = async () => {
         try {
-            const response = await axios.get<IProduct[]>('https://localhost:7206/Product');
+            const response = await axios.get<IProduct[]>(ApiConstants.ProductBaseUrl);
             if (response.data != null)
                 SetProducts(response.data);
         } catch (error) {
@@ -25,7 +27,7 @@ export const ProductStore: React.FC = () => {
     }
 
     const CreateProduct = (product: Product) => {
-        axios.post('https://localhost:7206/Product', product).then(() => {
+        axios.post(ApiConstants.ProductBaseUrl, product).then(() => {
             GetProducts();
         });
     }
@@ -35,7 +37,7 @@ export const ProductStore: React.FC = () => {
     }
 
     return (
-        <Grid2 container spacing={2}>
+        <Grid2 container spacing={3}>
             <Grid2 size={12}>
                 <Card>
                     <CardContent>
@@ -44,10 +46,13 @@ export const ProductStore: React.FC = () => {
                 </Card>
             </Grid2>
             <Grid2 size={8}>
-                <ProductGalleryView products={products} EditFunction={EditProduct} />
+                <ProductTable products={products} EditFunction={EditProduct} />
             </Grid2>
             <Grid2 size={4}>
                 <ProductCreateForm CreateFunction={CreateProduct} />
+            </Grid2>
+            <Grid2 size={12}>
+                <ProductGalleryView products={products} EditFunction={EditProduct} />
             </Grid2>
         </Grid2>
     )

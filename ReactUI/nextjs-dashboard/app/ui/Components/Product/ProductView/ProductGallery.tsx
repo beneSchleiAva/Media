@@ -11,7 +11,7 @@ export interface ProductGalleryProps {
 
 export const ProductGalleryView = (props: ProductGalleryProps) => {
   return (
-    <div className="mt-4 grid grid-cols-3 gap-1">
+    <div className="mt-4 grid grid-cols-1 gap-1">
       {props.products.map((product) => { return <div key={product.productIdUIDto.value}><ProductView product={product} EditFunction={props.EditFunction} /></div>; })}
     </div>
   )
