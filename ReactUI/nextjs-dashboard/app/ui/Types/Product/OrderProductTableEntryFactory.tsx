@@ -14,10 +14,10 @@ export class OrderProductTableEntryFactory {
             tableEntry.name = orderProduct.name;
         if (typeof orderProduct.description !== undefined)
             tableEntry.description = orderProduct.description;
-        if (typeof orderProduct.quantity !== undefined)
-            tableEntry.quantity = orderProduct.quantity;
-        if (typeof orderProduct.effectivePrice !== undefined)
-            tableEntry.effectivePrice = orderProduct.effectivePrice;
+        if (typeof orderProduct.Quantity !== undefined)
+            tableEntry.quantity = orderProduct.Quantity;
+        if (typeof orderProduct.EffectivePrice !== undefined)
+            tableEntry.effectivePrice = orderProduct.EffectivePrice;
         return tableEntry;
     }
 

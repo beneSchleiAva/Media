@@ -5,6 +5,7 @@ using Events.Events.EntityCreated;
 using Events.EventsStore;
 using Events.EventStore;
 using Events.Queries;
+using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.Elements;
 using Persistence.Repositories.Abstract;
 using Persistence.Repositories.Concrete;
@@ -44,10 +45,13 @@ namespace FrontendBase
                 .As<IRepository<IProduct>>()
                 .SingleInstance();
 
-            builder.RegisterType<InMemoryRepo<IOrder>>()
+            builder.RegisterType<PersistentDatabaseRepository<IOrder>>()
                 .As<IRepository<IOrder>>()
                 .SingleInstance();
 
+            builder.RegisterType<PersistentDatabaseRepository<IOrderPosition>>()
+            .As<IRepository<IOrderPosition>>()
+           .SingleInstance();
             #endregion
 
             #region QueryHandlers
@@ -59,6 +63,10 @@ namespace FrontendBase
                 .As<QueryHandler<GetAllQuery<IOrder>, IEnumerable<IOrder>>>()
                 .SingleInstance();
 
+            builder.RegisterType<GetAllQueryHandler<IOrderPosition>>()
+                .As<QueryHandler<GetAllQuery<IOrderPosition>, IEnumerable<IOrderPosition>>>()
+                .SingleInstance();
+
             #endregion
 
             #region EventHandlers
@@ -68,6 +76,8 @@ namespace FrontendBase
                 .As<CQRS.Mediatr.Lite.EventHandler<EntityCreatedEvent<IOrder>>>()
                 .SingleInstance();
 
+            builder.RegisterType<EntityCreatedEventHandler<EntityCreatedEvent<IOrderPosition>, IOrderPosition>>().As<CQRS.Mediatr.Lite.EventHandler<EntityCreatedEvent<IOrderPosition>>>().SingleInstance();
+
             #endregion
             #region CommandHandlers
             builder.RegisterType<EntityCreateCommandHandler<IProduct>>()
@@ -75,6 +85,8 @@ namespace FrontendBase
 
             builder.RegisterType<EntityCreateCommandHandler<IOrder>>()
                 .As<CommandHandler<EntityCreateCommand<IOrder>, IdCommandResult>>();
+          
+            builder.RegisterType<EntityCreateCommandHandler<IOrderPosition>>().As<CommandHandler<EntityCreateCommand<IOrderPosition>, IdCommandResult>>();
             #endregion
         }
     }

@@ -12,7 +12,7 @@ export class OrderProductFactory {
         orderProduct.productPriceUIDto = product.productPriceUIDto;
         orderProduct.name = product.name;
         orderProduct.description = product.description;
-        orderProduct.quantity = 0;
+        orderProduct.Quantity = 0;
         return orderProduct;
     }
     static FromOrderProductTableEntry(tableEntry: OrderProductTableEntry) {
@@ -21,8 +21,8 @@ export class OrderProductFactory {
         orderProduct.productPriceUIDto = new ProductPrice(tableEntry.price);
         orderProduct.name = tableEntry.name;
         orderProduct.description = tableEntry.description;
-        orderProduct.quantity = tableEntry.quantity;
-        orderProduct.effectivePrice = tableEntry.effectivePrice;
+        orderProduct.Quantity = tableEntry.quantity;
+        orderProduct.EffectivePrice = tableEntry.effectivePrice;
         return orderProduct;
     }
 

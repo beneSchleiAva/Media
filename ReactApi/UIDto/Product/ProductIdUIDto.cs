@@ -1,6 +1,6 @@
 ﻿using ModelInterface.Interface.ValueObjects;
 
-namespace ReactApi.UIDto
+namespace ReactApi.UIDto.Product
 {
     public class ProductIdUIDto : IProductId
     {

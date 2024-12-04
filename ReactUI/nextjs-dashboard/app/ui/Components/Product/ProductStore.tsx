@@ -12,10 +12,13 @@ import { ApiConstants } from '../Constants/Constants';
 import { OrderSelectionView } from './OrderSelectionView/OrderSelectionView';
 import { OrderProduct } from '../../Types/Product/OrderProduct';
 import { OrderProductFactory } from '../../Types/Product/OrderProductFactory';
+import { OrderPosition } from '../../Types/Order/OrderPosition';
+import { Order } from '../../Types/Order/Order';
 
 export const ProductStore: React.FC = () => {
     const [products, SetProducts] = useState<Product[]>([]);
     const [selectedOrderProducts, SetSelectedOrderProducts] = useState<OrderProduct[]>([]);
+
     useEffect(() => {
         GetProducts()
     }, []);
@@ -39,15 +42,47 @@ export const ProductStore: React.FC = () => {
     const EditProduct = (editProduct: Product) => {
         console.log(editProduct);
     }
+
     const CreateOrder = (orderProducts: OrderProduct[]) => {
-        console.log(orderProducts);
+
+        const orderPositions = new Array<OrderPosition>();
+
+        orderProducts.forEach(orderProduct => {
+            try {
+                orderPositions.push({
+                    referenceProduct: {
+                        value: orderProduct.productIdUIDto.value
+                    },
+                    referenceBilledProductUnitPrice: {
+                        value: orderProduct.productPriceUIDto.value
+                    },
+                    referenceCurrentProductBookUnitPrice: {
+                        value: orderProduct.productPriceUIDto.value
+                    }
+                    ,
+                    referenceOrderDescription: {
+                        quantity: orderProduct.Quantity,
+                        effectivePrice: orderProduct.EffectivePrice
+                    }
+                });
+
+                const order: Order = {
+                    orderPositions: orderPositions
+                }
+
+                axios.post(ApiConstants.OrderBaseUrl, order);
+
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
     }
     const SelectOrderProducts = (selectedProducts: Product[]) => {
         let orderProducts = selectedProducts.map((product) => {
             return OrderProductFactory.FromProduct(product);
         });
         SetSelectedOrderProducts(orderProducts);
-
     }
 
     return (

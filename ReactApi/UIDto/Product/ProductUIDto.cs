@@ -2,7 +2,7 @@
 using ModelInterface.Interface.ValueObjects;
 using System.Text.Json.Serialization;
 
-namespace ReactApi.UIDto
+namespace ReactApi.UIDto.Product
 {
     public class ProductUIDto : IProduct
     {
@@ -16,9 +16,9 @@ namespace ReactApi.UIDto
         public string? Description { get; set; }
 
         [JsonIgnore]
-        public IProductId? ProductId { get => ProductIdUIDto; set => ProductId = value; }
+        public IProductId? ProductId => ProductIdUIDto;
         [JsonIgnore]
-        public IProductPrice? Price { get => ProductPriceUIDto; set => Price = value; }
+        public IProductPrice? Price => ProductPriceUIDto;
 
         public ProductUIDto()
         {
@@ -32,12 +32,21 @@ namespace ReactApi.UIDto
                 ProductIdUIDto = new(product.ProductId.Value);
             else
                 ProductIdUIDto = new();
+
             if (product?.Price?.Value is not null)
-                ProductPriceUIDto = new (product.Price.Value);
+                ProductPriceUIDto = new(product.Price.Value);
             else
                 ProductPriceUIDto = new();
-            Name = product.Name;
-            Description = product.Description;
+
+            if (product?.Name is not null)
+                Name = product.Name;
+            else
+                Name = string.Empty;
+
+            if (product?.Description is not null)
+                Description = product.Description;
+            else
+                Description = string.Empty;
         }
 
     }

@@ -7,10 +7,14 @@ namespace ModelInterface.Model
 {
     internal class ConcreteOrderPosition : IOrderPosition
     {
+        public Guid? Id { get; private set; }
         public IOrderDescription OrderDescription { get; private set; }
         public IProductId ProductId { get; private set; }
-        public IProductPrice ProductPrice { get; private set; }
         public DateTime Created { get; private set; }
+
+        public IProductPrice BilledProductUnitPrice { get; set; }
+
+        public IProductPrice CurrentProductBookUnitPrice { get; set; }
 
         public ConcreteOrderPosition(IProduct product, IOrderDescription orderDescription)
         {
@@ -20,19 +24,12 @@ namespace ModelInterface.Model
                 ProductId = new ConcreteProductId();
 
             if (product.Price is not null)
-                ProductPrice = product.Price;
+                CurrentProductBookUnitPrice = product.Price;
             else
-                ProductPrice = new ConcreteProductPrice(0);
+                CurrentProductBookUnitPrice = new ConcreteProductPrice(0);
 
             OrderDescription = orderDescription;
             Created = DateTime.Now;
-        }
-
-        public decimal CalculateGivenDiscount()
-        {
-            if (ProductPrice.Value == 0)
-                return decimal.MinValue;
-            return Math.Round((OrderDescription.TotalPrice - ProductPrice.Value * OrderDescription.Quantity) / (ProductPrice.Value * OrderDescription.Quantity), 2);
         }
     }
 }

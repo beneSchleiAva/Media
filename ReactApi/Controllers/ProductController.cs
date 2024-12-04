@@ -3,7 +3,7 @@ using Events.Commands.CreateEntity;
 using Events.Queries;
 using Microsoft.AspNetCore.Mvc;
 using ModelInterface.Interface.Elements;
-using ReactApi.UIDto;
+using ReactApi.UIDto.Product;
 
 namespace ReactApi.Controllers
 {
