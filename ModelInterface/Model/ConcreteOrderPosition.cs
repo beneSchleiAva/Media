@@ -12,9 +12,7 @@ namespace ModelInterface.Model
         public IProductId ProductId { get; private set; }
         public DateTime Created { get; private set; }
 
-        public IProductPrice BilledProductUnitPrice { get; set; }
-
-        public IProductPrice CurrentProductBookUnitPrice { get; set; }
+        public IProductPrice ProductBookUnitPrice { get; set; }
 
         public ConcreteOrderPosition(IProduct product, IOrderDescription orderDescription)
         {
@@ -24,9 +22,9 @@ namespace ModelInterface.Model
                 ProductId = new ConcreteProductId();
 
             if (product.Price is not null)
-                CurrentProductBookUnitPrice = product.Price;
+                ProductBookUnitPrice = product.Price;
             else
-                CurrentProductBookUnitPrice = new ConcreteProductPrice(0);
+                ProductBookUnitPrice = new ConcreteProductPrice(0);
 
             OrderDescription = orderDescription;
             Created = DateTime.Now;

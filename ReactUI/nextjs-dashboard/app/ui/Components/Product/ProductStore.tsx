@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IProduct } from '../../Interfaces/Product/IProduct';
 import React from 'react';
-import { ProductGalleryView } from './ProductView/ProductGallery';
 import { ProductTable } from './ProductView/ProductTable';
 import { Product } from '../../Types/Product/Product';
 import { Card, CardContent, Grid2, Typography } from '@mui/material';
@@ -13,7 +12,6 @@ import { OrderSelectionView } from './OrderSelectionView/OrderSelectionView';
 import { OrderProductFactory } from '../../Types/OrderProduct/OrderProductFactory';
 import { OrderPosition } from '../../Types/OrderPosition/OrderPosition';
 import { Order } from '../../Types/Order/Order';
-import { OrderTable } from '../Order/OrderTable';
 import axiosRetry from 'axios-retry';
 import { OrderProduct } from '../../Types/OrderProduct/OrderProduct';
 
@@ -41,29 +39,22 @@ export const ProductStore: React.FC = () => {
             GetProducts();
         });
     }
-
-    const EditProduct = (editProduct: Product) => {
-        console.log(editProduct);
-    }
-
     const CreateOrder = (orderProducts: OrderProduct[]) => {
 
+
+        console.log(orderProducts); 
         const orderPositions = new Array<OrderPosition>();
 
         orderProducts.forEach(orderProduct => {
             try {
                 orderPositions.push({
-                    referenceProduct: {
+                    productIdUIDto: {
                         value: orderProduct.productIdUIDto.value
                     },
-                    referenceBilledProductUnitPrice: {
+                    productBookUnitPriceDto: {
                         value: orderProduct.productPriceUIDto.value
-                    },
-                    referenceCurrentProductBookUnitPrice: {
-                        value: orderProduct.productPriceUIDto.value
-                    }
-                    ,
-                    referenceOrderDescription: {
+                    },                   
+                    orderDescriptionDto: {
                         quantity: orderProduct.Quantity,
                         effectivePrice: orderProduct.EffectivePrice
                     }
@@ -98,7 +89,7 @@ export const ProductStore: React.FC = () => {
                 </Card>
             </Grid2>
             <Grid2 size={5}>
-                <ProductTable products={products} EditFunction={EditProduct} SelectOrderFunction={SelectOrderProducts} />
+                <ProductTable products={products} SelectOrderFunction={SelectOrderProducts} />
             </Grid2>
             <Grid2 size={7}>
                 <Grid2 container spacing={3}>

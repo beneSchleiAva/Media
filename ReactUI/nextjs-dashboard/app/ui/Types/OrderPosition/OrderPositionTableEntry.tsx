@@ -1,4 +1,7 @@
 export class OrderPositionTableEntry{
-    "id": string;
-    "description": string;
+    "id":string;
+    "ProductId": string;
+    "Price_Sold":number;
+    "Price_Book": number;
+    "Quantity": number;
 }

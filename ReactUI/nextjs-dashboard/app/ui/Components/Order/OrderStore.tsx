@@ -33,8 +33,6 @@ export const OrderStore: React.FC = () => {
         }
     }
     return (
-
         <OrderTable orders={orders} />
-
     )
 }

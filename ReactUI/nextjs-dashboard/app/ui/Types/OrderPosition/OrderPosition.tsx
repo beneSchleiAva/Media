@@ -1,12 +1,9 @@
-import { OrderProductId } from "../OrderProduct/OrderProductId";
-import { OrderBilledProductUnitPrice } from "../Order/OrderBilledProductUnitPrice"
-import { OrderCurrentProductUnitPrice } from "../Order/OrderCurrentProductUnitPrice"
-import { OrderDescription } from "../Order/OrderDescription"
-
+import { OrderCurrentProductUnitPrice } from "../Order/OrderCurrentProductUnitPrice";
+import { OrderDescription } from "../Order/OrderDescription";
+import { ProductId } from "../Product/ProductId";
 
 export type OrderPosition ={
-    "referenceProduct": OrderProductId;
-    "referenceBilledProductUnitPrice": OrderBilledProductUnitPrice;
-    "referenceCurrentProductBookUnitPrice": OrderCurrentProductUnitPrice;
-    "referenceOrderDescription": OrderDescription;
+    "productIdUIDto": ProductId;
+    "productBookUnitPriceDto": OrderCurrentProductUnitPrice;
+    "orderDescriptionDto": OrderDescription;
 }

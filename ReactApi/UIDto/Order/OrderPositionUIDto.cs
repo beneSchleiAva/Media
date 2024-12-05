@@ -8,59 +8,53 @@ namespace ReactApi.UIDto.Order
 {
     public class OrderPositionUIDto : IOrderPosition
     {
-        public ProductIdUIDto ReferenceProduct { get; set; }
-        public ProductPriceUIDto ReferenceBilledProductUnitPrice { get; set; }
-        public ProductPriceUIDto ReferenceCurrentProductBookUnitPrice { get; set; }
-        public OrderDescriptionUIDto ReferenceOrderDescription { get; set; }
+        public ProductIdUIDto ProductIdUIDto{ get; set; }
+        public ProductPriceUIDto ProductBookUnitPriceDto { get; set; }
+        public OrderDescriptionUIDto OrderDescriptionDto { get; set; }
 
         #region JsonIgnoreProperties
         [JsonIgnore]
-        public IProductId ProductId => ReferenceProduct;
+        public IProductId ProductId => ProductIdUIDto;
 
         [JsonIgnore]
-        public IProductPrice BilledProductUnitPrice => ReferenceBilledProductUnitPrice;
+        public IProductPrice ProductBookUnitPrice => ProductBookUnitPriceDto;
 
         [JsonIgnore]
-        public IProductPrice CurrentProductBookUnitPrice => ReferenceCurrentProductBookUnitPrice;
+        public IOrderDescription OrderDescription => OrderDescriptionDto;
 
-        [JsonIgnore]
-        public IOrderDescription OrderDescription => ReferenceOrderDescription;
         #endregion
 
         public OrderPositionUIDto() { }
         internal OrderPositionUIDto(IOrderPosition orderPosition)
         {
             if (orderPosition?.ProductId?.Value is not null)
-                ReferenceProduct = new(orderPosition.ProductId.Value);
-            else ReferenceProduct = new();
+                ProductIdUIDto = new(orderPosition.ProductId.Value);
+            else ProductIdUIDto = new();
 
             if (orderPosition?.OrderDescription?.Quantity is not null && orderPosition?.OrderDescription?.EffectivePrice is not null)
-                ReferenceOrderDescription = new(orderPosition.OrderDescription.Quantity, orderPosition.OrderDescription.EffectivePrice);
-            else ReferenceOrderDescription = new();
+                OrderDescriptionDto= new(orderPosition.OrderDescription.Quantity, orderPosition.OrderDescription.EffectivePrice);
+            else OrderDescriptionDto = new();
 
-            if (orderPosition?.BilledProductUnitPrice?.Value is not null)
-                ReferenceBilledProductUnitPrice = new(orderPosition.BilledProductUnitPrice.Value);
-            else ReferenceBilledProductUnitPrice = new();
+            if (orderPosition?.ProductBookUnitPrice?.Value is not null)
+                ProductBookUnitPriceDto= new(orderPosition.ProductBookUnitPrice.Value);
+            else ProductBookUnitPriceDto= new();
 
-            if (orderPosition?.CurrentProductBookUnitPrice?.Value is not null)
-                ReferenceCurrentProductBookUnitPrice = new(orderPosition.CurrentProductBookUnitPrice.Value);
-            else ReferenceCurrentProductBookUnitPrice = new();
-        }
+     }
         
         internal OrderPositionUIDto(OrderPositionEntity orderPosition)
         {
             if (orderPosition?.ProductId is not null)
-                ReferenceProduct = new(orderPosition.ProductId);
-            else ReferenceProduct = new();
+                ProductIdUIDto = new(orderPosition.ProductId);
+            else ProductIdUIDto = new();
 
             if (orderPosition?.Quantity is not null && orderPosition?.BilledUnitPrice is not null)
-                ReferenceOrderDescription = new(orderPosition.Quantity, orderPosition.BilledUnitPrice);
-            else ReferenceOrderDescription = new();
+                OrderDescriptionDto = new(orderPosition.Quantity, orderPosition.BilledUnitPrice);
+            else OrderDescriptionDto = new();
 
 
-            if (orderPosition?.CurrentBookUnitPrice is not null)
-                ReferenceCurrentProductBookUnitPrice = new(orderPosition.CurrentBookUnitPrice);
-            else ReferenceCurrentProductBookUnitPrice = new();
+            if (orderPosition?.ProductBookUnitPrice is not null)
+                ProductBookUnitPriceDto = new(orderPosition.BilledUnitPrice);
+            else ProductBookUnitPriceDto = new();
         }
     }
 }

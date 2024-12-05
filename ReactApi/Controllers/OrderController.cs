@@ -28,8 +28,8 @@ namespace ReactApi.Controllers
         {
             var list = new List<OrderUIDto>();
             var queryEntities = await _queryService.Query(new GetAllQuery<IOrder>());
-            queryEntities.ToList().ForEach(product => list.Add(new OrderUIDto(product)));
-            return list;
+                queryEntities.ToList().ForEach(product => list.Add(new OrderUIDto(product)));
+                    return list;
         }
 
         [HttpPost(Name = "PostOrder")]

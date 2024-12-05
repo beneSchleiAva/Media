@@ -8,6 +8,7 @@ namespace ReactApi.UIDto.Order
     public class OrderUIDto : IOrder
     {
         public IEnumerable<OrderPositionUIDto> OrderPositions { get; set; } = new List<OrderPositionUIDto>();
+
         [JsonIgnore]
         public IEnumerable<IOrderPosition> Positions => OrderPositions;
 

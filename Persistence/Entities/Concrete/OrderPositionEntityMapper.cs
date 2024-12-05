@@ -11,9 +11,7 @@ namespace Persistence.Entities.Concrete
 
         public IProductId ProductId => ProductIdFactory.Create(Entity.ProductId);
 
-        public IProductPrice BilledProductUnitPrice => ProductPriceFactory.Create(Entity.BilledUnitPrice);
-
-        public IProductPrice CurrentProductBookUnitPrice => ProductPriceFactory.Create(Entity.CurrentBookUnitPrice);
+        public IProductPrice ProductBookUnitPrice => ProductPriceFactory.Create(Entity.BilledUnitPrice);
 
         public IOrderDescription OrderDescription => OrderDescriptionFactory.Create(Entity.BilledUnitPrice, Entity.Quantity);
 
@@ -27,7 +25,7 @@ namespace Persistence.Entities.Concrete
             Entity.ProductId = position.ProductId?.Value ?? Guid.Empty;
             Entity.Quantity = position.OrderDescription.Quantity;
             Entity.BilledUnitPrice = position.OrderDescription.EffectivePrice;
-            Entity.CurrentBookUnitPrice = position.CurrentProductBookUnitPrice.Value;
+            Entity.ProductBookUnitPrice = position.ProductBookUnitPrice.Value;
         }
         public OrderPositionEntityMapper(OrderPositionEntity entity)
         {

@@ -5,8 +5,7 @@ namespace ModelInterface.Interface.Aggregates
     public interface IOrderPosition
     {
         IProductId ProductId { get; }
-        IProductPrice BilledProductUnitPrice { get; }
-        IProductPrice CurrentProductBookUnitPrice { get; }
+        IProductPrice ProductBookUnitPrice { get; }
         IOrderDescription OrderDescription { get; }
     }
 }
