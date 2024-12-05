@@ -1,6 +1,6 @@
 import { OrderProduct } from './OrderProduct';
 import { OrderProductTableEntry } from './OrderProductTableEntry';
-import { Product } from './Product';
+import { Product } from '../Product/Product';
 
 export class OrderProductTableEntryFactory {
 

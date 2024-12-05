@@ -41,16 +41,28 @@ namespace FrontendBase
 
             #region Storage
 
-            builder.RegisterType<PersistentDatabaseRepository<IProduct>>()
-                .As<IRepository<IProduct>>()
+            builder.RegisterType<PersistentCommandRepository<IProduct>>()
+                .As<ICommandRepository<IProduct>>()
                 .SingleInstance();
 
-            builder.RegisterType<PersistentDatabaseRepository<IOrder>>()
-                .As<IRepository<IOrder>>()
+            builder.RegisterType<PersistentCommandRepository<IOrder>>()
+                .As<ICommandRepository<IOrder>>()
                 .SingleInstance();
 
-            builder.RegisterType<PersistentDatabaseRepository<IOrderPosition>>()
-            .As<IRepository<IOrderPosition>>()
+            builder.RegisterType<PersistentCommandRepository<IOrderPosition>>()
+            .As<ICommandRepository<IOrderPosition>>()
+           .SingleInstance();
+
+            builder.RegisterType<PersistentQueryRepository<IProduct>>()
+            .As<IQueryRepository<IProduct>>()
+            .SingleInstance();
+
+            builder.RegisterType<PersistentQueryRepository<IOrder>>()
+                .As<IQueryRepository<IOrder>>()
+                .SingleInstance();
+
+            builder.RegisterType<PersistentQueryRepository<IOrderPosition>>()
+            .As<IQueryRepository<IOrderPosition>>()
            .SingleInstance();
             #endregion
 
@@ -85,7 +97,7 @@ namespace FrontendBase
 
             builder.RegisterType<EntityCreateCommandHandler<IOrder>>()
                 .As<CommandHandler<EntityCreateCommand<IOrder>, IdCommandResult>>();
-          
+
             builder.RegisterType<EntityCreateCommandHandler<IOrderPosition>>().As<CommandHandler<EntityCreateCommand<IOrderPosition>, IdCommandResult>>();
             #endregion
         }

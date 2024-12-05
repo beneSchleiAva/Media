@@ -12,11 +12,11 @@ namespace Events.Commands.CreateEntity
 {
     public class EntityCreateCommandHandler<T> : CommandHandler<EntityCreateCommand<T>, IdCommandResult> where T : class
     {
-        private readonly IRepository<T> repository;
+        private readonly ICommandRepository<T> repository;
         private readonly IEventBus _eventBus;
         private readonly ICommandBus _commandBus;
 
-        public EntityCreateCommandHandler(IRepository<T> repository, IEventBus eventBus, ICommandBus commandBus)
+        public EntityCreateCommandHandler(ICommandRepository<T> repository, IEventBus eventBus, ICommandBus commandBus)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));

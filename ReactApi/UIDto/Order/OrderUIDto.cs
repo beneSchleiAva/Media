@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.Elements;
+using Persistence.Entities.Concrete;
 
 namespace ReactApi.UIDto.Order
 {
@@ -20,6 +21,13 @@ namespace ReactApi.UIDto.Order
         public OrderUIDto(IOrder interfaceOrder) {
             if (interfaceOrder?.Positions is not null)
                 OrderPositions = interfaceOrder.Positions.Select(p => new OrderPositionUIDto(p));
+            else OrderPositions = new List<OrderPositionUIDto>();
+        }
+
+        public OrderUIDto(OrderEntity entity)
+        {
+            if (entity?.Positions is not null)
+                OrderPositions = entity.Positions.Select(p => new OrderPositionUIDto(p));
             else OrderPositions = new List<OrderPositionUIDto>();
         }
     }

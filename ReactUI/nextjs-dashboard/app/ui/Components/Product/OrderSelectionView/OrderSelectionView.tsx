@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { OrderProduct } from '@/app/ui/Types/Product/OrderProduct';
 import { Button, Grid2 } from '@mui/material';
-import { OrderProductTableEntryFactory } from '@/app/ui/Types/Product/OrderProductTableEntryFactory';
-import { OrderProductFactory } from '@/app/ui/Types/Product/OrderProductFactory';
-import { OrderProductTableEntry } from '@/app/ui/Types/Product/OrderProductTableEntry';
+import { OrderProductTableEntryFactory } from '@/app/ui/Types/OrderProduct/OrderProductTableEntryFactory';
+import { OrderProductFactory } from '@/app/ui/Types/OrderProduct/OrderProductFactory';
+import { OrderProductTableEntry } from '@/app/ui/Types/OrderProduct/OrderProductTableEntry';
 import { TableColumns } from '@/app/ui/Types/Product/TableColumns';
+import { OrderProduct } from '@/app/ui/Types/OrderProduct/OrderProduct';
 
 export interface OrderSelectionViewProps {
     providedOrderProducts: OrderProduct[],

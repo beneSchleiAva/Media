@@ -26,18 +26,17 @@ namespace ReactApi.Controllers
         public async Task<IEnumerable<OrderPositionUIDto>> Get()
         {
             var list = new List<OrderPositionUIDto>();
-            var queryProducts = await _queryService.Query(new GetAllQuery<IOrderPosition>());
-            queryProducts.ToList().ForEach(product => list.Add(new OrderPositionUIDto(product)));
+            var queryEntities = await _queryService.Query(new GetAllQuery<IOrderPosition>());
+            queryEntities.ToList().ForEach(entity => list.Add(new OrderPositionUIDto(entity)));
             return list;
 
         }
 
         [HttpPost(Name = "PostOrderPosition")]
-        public async Task<IOrderPosition> Post(OrderPositionUIDto position)
+        public async Task Post(OrderPositionUIDto input)
         {
-                EntityCreateCommand<IOrderPosition> orderPositionCommand = new(position);
-            var result = await _commandBus.Send(orderPositionCommand);
-            return position;
+            EntityCreateCommand<IOrderPosition> command = new(input);
+            var result = await _commandBus.Send(command);
         }
     }
 }

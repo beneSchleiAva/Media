@@ -1,8 +1,4 @@
-import { OrderBilledProductUnitPrice } from "./OrderBilledProductUnitPrice"
-import { OrderCurrentProductUnitPrice } from "./OrderCurrentProductUnitPrice"
-import { OrderDescription } from "./OrderDescription"
-import { OrderPosition } from "./OrderPosition"
-import { OrderProductId } from "./OrderProductId"
+import { OrderPosition } from "../OrderPosition/OrderPosition"
 
 export type Order ={
     "orderPositions": OrderPosition[];

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using ModelInterface.Interface.Aggregates;
 using ModelInterface.Interface.ValueObjects;
+using Persistence.Entities.Concrete;
 using ReactApi.UIDto.Product;
 
 namespace ReactApi.UIDto.Order
@@ -43,6 +44,22 @@ namespace ReactApi.UIDto.Order
 
             if (orderPosition?.CurrentProductBookUnitPrice?.Value is not null)
                 ReferenceCurrentProductBookUnitPrice = new(orderPosition.CurrentProductBookUnitPrice.Value);
+            else ReferenceCurrentProductBookUnitPrice = new();
+        }
+        
+        internal OrderPositionUIDto(OrderPositionEntity orderPosition)
+        {
+            if (orderPosition?.ProductId is not null)
+                ReferenceProduct = new(orderPosition.ProductId);
+            else ReferenceProduct = new();
+
+            if (orderPosition?.Quantity is not null && orderPosition?.BilledUnitPrice is not null)
+                ReferenceOrderDescription = new(orderPosition.Quantity, orderPosition.BilledUnitPrice);
+            else ReferenceOrderDescription = new();
+
+
+            if (orderPosition?.CurrentBookUnitPrice is not null)
+                ReferenceCurrentProductBookUnitPrice = new(orderPosition.CurrentBookUnitPrice);
             else ReferenceCurrentProductBookUnitPrice = new();
         }
     }

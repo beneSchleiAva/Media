@@ -10,17 +10,20 @@ import { Card, CardContent, Grid2, Typography } from '@mui/material';
 import ProductCreateForm from './Create/ProductCreateForm';
 import { ApiConstants } from '../Constants/Constants';
 import { OrderSelectionView } from './OrderSelectionView/OrderSelectionView';
-import { OrderProduct } from '../../Types/Product/OrderProduct';
-import { OrderProductFactory } from '../../Types/Product/OrderProductFactory';
-import { OrderPosition } from '../../Types/Order/OrderPosition';
+import { OrderProductFactory } from '../../Types/OrderProduct/OrderProductFactory';
+import { OrderPosition } from '../../Types/OrderPosition/OrderPosition';
 import { Order } from '../../Types/Order/Order';
+import { OrderTable } from '../Order/OrderTable';
+import axiosRetry from 'axios-retry';
+import { OrderProduct } from '../../Types/OrderProduct/OrderProduct';
 
 export const ProductStore: React.FC = () => {
     const [products, SetProducts] = useState<Product[]>([]);
     const [selectedOrderProducts, SetSelectedOrderProducts] = useState<OrderProduct[]>([]);
 
+    axiosRetry(axios, { retries: 3 });
     useEffect(() => {
-        GetProducts()
+        GetProducts();
     }, []);
 
     const GetProducts = async () => {
@@ -29,7 +32,7 @@ export const ProductStore: React.FC = () => {
             if (response.data != null)
                 SetProducts(response.data);
         } catch (error) {
-            ;
+            console.log(error);
         }
     }
 
@@ -106,9 +109,6 @@ export const ProductStore: React.FC = () => {
                         <OrderSelectionView providedOrderProducts={selectedOrderProducts} CreateFunction={CreateOrder} />
                     </Grid2>
                 </Grid2>
-            </Grid2>
-            <Grid2 size={12}>
-                <ProductGalleryView products={products} EditFunction={EditProduct} />
             </Grid2>
         </Grid2>
     )

@@ -6,10 +6,10 @@ using Persistence.Repositories.Abstract;
 
 namespace Persistence.Repositories.Concrete
 {
-    public class PersistentDatabaseRepository<T> : IRepository<T> where T : class
+    public class PersistentCommandRepository<T> : ICommandRepository<T> where T : class
     {
         private readonly EntityContext context;
-        public PersistentDatabaseRepository(EntityContext context)
+        public PersistentCommandRepository(EntityContext context)
         {
             this.context = context;
         }
@@ -46,24 +46,5 @@ namespace Persistence.Repositories.Concrete
                 }
             }
         }
-
-        public IEnumerable<T> GetAll(Func<T, bool> predicate)
-        {
-            if (typeof(T).IsAssignableTo(typeof(IProduct)) && context.Products is not null)
-                return (IEnumerable<T>)context.Products.ToList();
-            if (typeof(T).IsAssignableTo(typeof(IOrderPosition)) && context.OrderPositions is not null)
-            {
-                var entries = context.OrderPositions.ToList();
-                var mlist = new List<OrderPositionEntityMapper>();
-                entries.ForEach(e =>
-                {
-
-                    OrderPositionEntityMapper m = new(e);
-                    mlist.Add(m);
-                });
-
-                return (IEnumerable<T>)mlist;
-        } return new List<T>();
-        }
-}
+    }
 }

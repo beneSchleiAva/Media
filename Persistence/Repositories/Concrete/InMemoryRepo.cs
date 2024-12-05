@@ -3,7 +3,7 @@ using Persistence.Repositories.Abstract;
 
 namespace Persistence.Repositories.Concrete
 {
-    public class InMemoryRepo<T> : IRepository<T> where T : class
+    public class InMemoryRepo<T> : ICommandRepository<T> where T : class
     {
         private static readonly IList<T> items = new List<T>();
 

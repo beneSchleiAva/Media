@@ -1,8 +1,8 @@
-import { Product } from './Product';
+import { Product } from '../Product/Product';
 import { OrderProduct } from './OrderProduct';
-import { ProductTableEntry } from './ProductTableEntry';
-import { ProductId } from './ProductId';
-import { ProductPrice } from './ProductPrice';
+import { ProductTableEntry } from '../Product/ProductTableEntry';
+import { ProductId } from '../Product/ProductId';
+import { ProductPrice } from '../Product/ProductPrice';
 import { OrderProductTableEntry } from './OrderProductTableEntry';
 export class OrderProductFactory {
 
