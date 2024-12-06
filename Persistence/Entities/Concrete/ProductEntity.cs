@@ -1,22 +1,23 @@
-﻿using ModelInterface.Interface.Elements;
-using ModelInterface.Interface.ValueObjects;
-using Persistence.Entities.Abstract;
+﻿using System.ComponentModel.DataAnnotations;
+using ModelInterface.Interface.Elements;
 
 namespace Persistence.Entities.Concrete
 {
-    internal class ProductEntity : IEntity
+    public class ProductEntity
     {
+        [Key]
         public Guid Id { get; set; }
-        public string Name { get; set; } 
-        public string Description { get; set; } 
-        public decimal Price { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public decimal BookUnitPrice { get; set; }
 
+        public ProductEntity() { }
         public ProductEntity(IProduct product)
         {
-            Id = product.Id?.Value ?? Guid.Empty;
-            Name = product?.Name??"";
-            Description = product?.Description??"";
-            Price = product?.Price?.Value??0;
+            Id = product.ProductId?.Value ?? Guid.Empty;
+            Name = product?.Name ?? "";
+            Description = product?.Description ?? "";
+            BookUnitPrice = product?.Price?.Value ?? 0;
         }
     }
 }

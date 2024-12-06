@@ -1,4 +1,5 @@
-﻿using CQRS.Mediatr.Lite;
+﻿
+using CQRS.Mediatr.Lite;
 
 namespace Events.Queries
 {

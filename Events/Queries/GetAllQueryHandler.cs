@@ -5,9 +5,9 @@ namespace Events.Queries
 {
     public class GetAllQueryHandler<T> : QueryHandler<GetAllQuery<T>, IEnumerable<T>> where T : class
     {
-        private readonly IRepository<T> repository;
+        private readonly IQueryRepository<T> repository;
 
-        public GetAllQueryHandler(IRepository<T> repository)
+        public GetAllQueryHandler(IQueryRepository<T> repository)
         {
             this.repository = repository ?? throw new ArgumentNullException();
         }

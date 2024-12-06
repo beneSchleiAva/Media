@@ -22,7 +22,7 @@ namespace ModelInterface.Model
 
         public decimal GetTotalPrice()
         {
-            return Positions.Sum(p => p.OrderDescription.TotalPrice);
+            return Positions.Sum(p => p.OrderDescription.EffectivePrice);
         }
     }
 }

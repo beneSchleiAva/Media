@@ -9,8 +9,7 @@
     <RowTemplate>
         <MudTd>@context.ProductId.Value</MudTd>
         <MudTd>@context.OrderDescription.Quantity</MudTd>
-        <MudTd>@context.OrderDescription.TotalPrice</MudTd>
-        <MudTd>@context.ProductPrice.Value</MudTd>
-        <MudTd>@context.CalculateGivenDiscount().ToString("P")</MudTd>
+        <MudTd>@context.OrderDescription.EffectivePrice</MudTd>
+        <MudTd>@context.ProductBookUnitPrice.Value</MudTd>
     </RowTemplate>
 </MudTable>

@@ -3,6 +3,6 @@
     public interface IOrderDescription
     {
         int Quantity { get; }
-        decimal TotalPrice { get; }
+        decimal EffectivePrice { get; }
     }
 }

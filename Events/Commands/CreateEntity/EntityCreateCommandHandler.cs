@@ -12,11 +12,11 @@ namespace Events.Commands.CreateEntity
 {
     public class EntityCreateCommandHandler<T> : CommandHandler<EntityCreateCommand<T>, IdCommandResult> where T : class
     {
-        private readonly IRepository<T> repository;
+        private readonly ICommandRepository<T> repository;
         private readonly IEventBus _eventBus;
         private readonly ICommandBus _commandBus;
 
-        public EntityCreateCommandHandler(IRepository<T> repository, IEventBus eventBus, ICommandBus commandBus)
+        public EntityCreateCommandHandler(ICommandRepository<T> repository, IEventBus eventBus, ICommandBus commandBus)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
@@ -25,27 +25,18 @@ namespace Events.Commands.CreateEntity
 
         protected override async Task<IdCommandResult> ProcessRequest(EntityCreateCommand<T> request)
         {
+            //3 if valid
             CreateEntityAggregateRoot<T> aggregateRoot = new();
             if (request.Item is not null)
             {
 
                 aggregateRoot.Create(request.Item);
                 repository.AddOrUpdate(request.Item);
+                await _eventBus.Send(new EntityCreatedEvent<T>(request.Item));
 
-                if (typeof(T) == typeof(IOrder))
-                {
-                    var product = ProductFactory.Create("", "", 12m);
-                    var op = OrderPositionFactory.Create(product, 43546m, 456);
-                    var opl = new List<IOrderPosition>() { op };
-                    var i = OrderFactory.Create(opl);
-                    var ev = new EntityCreatedEvent<IOrder>(i);
-                    await  _eventBus.Send(ev);
-                   
-                }
             }
 
             return new IdCommandResult(aggregateRoot.Id.ToString());
         }
-
     }
 }

@@ -17,5 +17,14 @@ namespace Events.Events.EntityCreated
             DisplayName = nameof(EntityCreatedEvent<T>);
             Item = item;
         }
+
+        public EntityCreatedEvent(EntityBaseAggregateRoot<T> aggregate)
+        {
+            Id = Guid.NewGuid().ToString();
+            DisplayName = nameof(EntityCreatedEvent<T>);
+            if (aggregate?.Item is not null)
+                Item = aggregate.Item;
+
+        }
     }
 }

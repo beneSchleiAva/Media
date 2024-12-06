@@ -21,12 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Events\Events.csproj" />
-    <ProjectReference Include="..\Persistence\Persistence.csproj" />
+    <ContainerPort Include="8081" />
   </ItemGroup>
 
   <ItemGroup>
-    <ContainerPort Include="8081" />
+    <ProjectReference Include="..\FrontendBase\FrontendBase.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,8 +16,4 @@
     <ProjectReference Include="..\RuleEngine\Evaluation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Aggregates\" />
-  </ItemGroup>
-
 </Project>

@@ -38,7 +38,7 @@
                 <MudButton OnClick="AssignOrderPositionCallback" Variant="Variant.Filled">Assign</MudButton>
             </MudItem>
             <MudItem xs="12">
-                <OrderPositionTable OrderPositions="orderPositions"/>
+                <OrderPositionTable OrderPositions="orderPositions" />
             </MudItem>
         </MudGrid>
     </MudItem>
@@ -55,7 +55,6 @@
                         {
                             <MudCard>
                                 <MudCardContent>
-                                    <MudText>Order: @order.Id</MudText>
                                     <MudText>Amount: @order.GetTotalPrice()</MudText>
                                 </MudCardContent>
                             </MudCard>
@@ -86,9 +85,11 @@
             orderPositions.CopyTo(positions);
 
             EntityCreateCommand<IOrder> orderCmd = new(positions);
-            var result = await CommandBus.Send(orderCmd);
-            orderPositions.Clear();
-            await InvokeAsync(StateHasChanged);
+            var result = await CommandBus.Send(orderCmd).ContinueWith(async t =>
+            {
+                orderPositions.Clear();
+                await InvokeAsync(StateHasChanged);
+            });
         }
     }
 
@@ -105,7 +106,7 @@
         () { 10, 15, 13 };
         List<decimal>
         prices = new List<decimal>
-        () { 0, 12, 88m, 13m };
+        () { 12, 88m, 13m };
         Random random = new();
 
         if (firstRender)
@@ -121,8 +122,8 @@
             {
                 if (products is not null)
                 {
-                    products.ToList().ForEach(p => ProductIdName.Add(p.Id.Value, p.Name));
-                    products.ToList().ForEach(p => ProductIdPrice.Add(p.Id.Value, p.Price.Value));
+                    products.ToList().ForEach(p => ProductIdName.Add(p.ProductId.Value, p.Name));
+                    products.ToList().ForEach(p => ProductIdPrice.Add(p.ProductId.Value, p.Price.Value));
                 }
                 await InvokeAsync(StateHasChanged);
             });
